@@ -1903,6 +1903,112 @@ TCP = {
     },
 }
 
+# =============================================================================
+# 11. HOOK VAULT  — Top 100 viral hook templates
+# =============================================================================
+HOOKS_100 = [
+    'Husband: "[conversation]"  Wife: "[conversation]"  Husband: ...',
+    "The person who sent you this wants to [XYZ]",
+    "[X] places in [country/state] you need to visit before you die",
+    "Me [activity] vs. my husband trying",
+    "A road trip you have to do at least once in your life",
+    "When your husband tells you [XYZ] and this happens...",
+    "When you visit [country] and...",
+    'What they really mean when they say "[phrase]"',
+    "Why everyone needs to visit [XYZ] at least once in their life",
+    "My wife when [activity]:",
+    "My [quality] wife when she [activity] — e.g. My Type-A wife when she sends me our travel itinerary",
+    "After visiting [N] states/countries/parks, here are our rankings:",
+    'When you realize you married a "traveler" and not a "vacationer"',
+    'Instead of saying "[quote]", how about "[quote]"',
+    "POV: Your husband asks you to...",
+    "Asking my wife to...",
+    "How normal people [activity] vs. me / my husband / my wife",
+    "POV: You're [activity]",
+    "After visiting over [X] countries, here are the most beautiful ones...",
+    "We knew [location] was beautiful — but we didn't know it was THIS beautiful...",
+    "POV: You plan an entire trip around a place you saw on Instagram and it was better than you imagined",
+    "When people visit [location] but only go to [location] — e.g. visit Washington but only go to Seattle",
+    "POV: You agree to stop [verb] and [verb] instead — e.g. stop exchanging gifts, go on honeymoons every year",
+    'Normal couples: "[quote]"  —  Us: ...',
+    "This is your friendly reminder that...",
+    "[Superlative] places to travel on a budget in [year] — cheapest / most beautiful / most epic",
+    "When people ask us the most [adjective] place we've ever visited, this is what we tell them...",
+    "The best [location] road trip itineraries",
+    "When you take your husband...",
+    "POV: Your wife plans a [trip] and this is how it goes...",
+    "Pretending to be my [relationship] when we're [activity]",
+    "This is not... this is not... this is not... THIS is...",
+    "When your husband makes you [activity] and this happens...",
+    "An epic [thing] you have to do at least once in your life",
+    "Don't miss this hike in [XYZ]!",
+    "POV: Your golden retriever husband...",
+    "When your wife says she wants to [XYZ]...",
+    "When you finally make it to the place you've always dreamed of",
+    "This might be one of the most beautiful hikes we've ever done",
+    "[X] things that probably aren't on your bucket list — but should be",
+    "Come with us to...",
+    "POV: You married a [stereotype] so your weekends look like this...",
+    "When you fly [X] hours and drive [X] hours to see this...",
+    "You need to visit this underrated [country] travel destination",
+    "This is one of the most underrated destinations in [country]",
+    "POV: You visit the [superlative] [place type] in the USA — e.g. the most beautiful beach town in the USA",
+    "I don't know who needs to hear this, but...",
+    "POV: You found the BEST [noun] in [location] — e.g. the best gelato in all of Italy",
+    "Instead of doing this, try doing this instead...",
+    "When you [activity], [activity] and [activity] — and then this happens...",
+    "I didn't know this existed, but now...",
+    "I know you have a [noun] that desperately needs [XYZ] — call them out, e.g. a down jacket that needs washing",
+    "[X] things I wish I knew sooner about [topic]",
+    "This sounds absolutely insane, but...",
+    "Why we stopped [activity]...",
+    "I think I've found the best [XYZ]...",
+    "You do not need to [verb] to [XYZ] — e.g. you don't need a fancy camera to take epic photos",
+    'When your husband says "[quote]"...',
+    "If you're going to buy one [noun], it should be a [noun] — e.g. one hiking item: a sun hoodie",
+    "[X] things I won't [activity] without",
+    "[Topic] mistakes I made so you don't have to — don't make this mistake starting out in [activity]",
+    'This is what I mean when I say "[saying]" — e.g. when I say let\'s take a cozy fall girls trip',
+    "You can't convince me that...",
+    "I can't believe this happened, but...",
+    "This is the best place in the world to [activity]",
+    "Send this to someone you want to go to [location] with",
+    "When the [trip] finally makes it out of the group chat",
+    "[Location] bucket list — top [X] things to do",
+    "This was easily the best view I saw in [year]",
+    "I think I may have just found the most [adjective] [place] — e.g. the most unique gym in the world",
+    "[Location] together?  (with complimentary emojis underneath)",
+    "[X] hours from [major city]... — e.g. 4 hours from Los Angeles",
+    "Welcome to the [superlative] [location type] in [country] — e.g. the prettiest beach town in the USA",
+    "There is a [adjective] town in the USA you have to visit",
+    "Is this the most [superlative] [place type] in the world? — e.g. the most beautiful library",
+    "How to spend the perfect [timeframe] in [location] — e.g. the perfect Christmas weekend in New York",
+    "I'm gonna let you in on a secret...",
+    "Just a reminder that [location] will look like this in [timeframe]",
+    "[XYZ] is cool — but have you heard of [location]?",
+    "[X] things I wish I knew before...",
+    "This is your sign to...",
+    "If you're going to [location], don't forget...",
+    "Welcome to...",
+    "Guys, we need to talk about...",
+    "This is what it's ACTUALLY like to...",
+    "So I heard that apparently...",
+    "Have you ever seen what it looks like to...",
+    "[X] [topic] hacks 99% of [niche] don't know — e.g. 10 Lightroom hacks 99% of photographers don't know",
+    "Moments in [location] that altered my brain chemistry",
+    "Don't do [activity] until you've done this — or without understanding [XYZ]",
+    "Why is nobody talking about [XYZ]...",
+    "[X] things I stopped doing to [activity] — e.g. 3 things I stopped doing to make travel more affordable",
+    "You will never do [XYZ] if you don't understand this...",
+    "This might be controversial, but...",
+    "If you only have time for one [XYZ], make it this one — e.g. one hike in Yosemite",
+    "[X] [timeframe] until [location] looks like this — e.g. 3 more weeks until New Zealand looks like this...",
+    "I can't believe so many people skip this...",
+    "Not many people talk about...",
+    "POV: You decide to spend your money on experiences instead of things",
+    "Easy [topic] hack to [result] — e.g. easy travel hack to save time at the airport",
+]
+
 # build the full data object the front-end consumes
 PLANNER_DATA = {
     "growth": GROWTH,
@@ -1918,6 +2024,7 @@ PLANNER_DATA = {
     "chicago": CHICAGO,
     "competitors": COMPETITORS,
     "tcp": TCP,
+    "hooks100": HOOKS_100,
 }
 
 # =============================================================================
@@ -2297,6 +2404,7 @@ PLANNER_BODY = r"""
     <button class="psubtab" data-sec="drone">&#128679; Drone Planner</button>
     <button class="psubtab" data-sec="layovers">&#9992;&#65039; Layovers</button>
     <button class="psubtab" data-sec="library">&#128218; Content Library</button>
+    <button class="psubtab" data-sec="hookvault">&#129693; Hook Vault</button>
     <button class="psubtab" data-sec="chicago">&#127956;&#65039; Chicago Playbook</button>
     <button class="psubtab" data-sec="strategy">&#128640; Posting Strategy</button>
     <button class="psubtab" data-sec="branddeals">&#128188; Brand Deals</button>
@@ -2320,6 +2428,7 @@ PLANNER_BODY = r"""
   <div class="psec" id="psec-drone"></div>
   <div class="psec" id="psec-layovers"></div>
   <div class="psec" id="psec-library"></div>
+  <div class="psec" id="psec-hookvault"></div>
   <div class="psec" id="psec-chicago"></div>
   <div class="psec" id="psec-strategy"></div>
   <div class="psec" id="psec-branddeals"></div>
@@ -3719,12 +3828,52 @@ function renderShootKit(){
   wireCopy($('#psec-shootkit'));
 }
 
+/* ============================================================ HOOK VAULT */
+const K_HOOKFAV='jbs_hookfav_v1';
+function renderHookVault(){
+  const hooks=PLANNER.hooks100||[];
+  $('#psec-hookvault').innerHTML=`
+    <div class="pseched">Hook Vault</div>
+    <div class="psecdesc">${hooks.length} viral hook templates. Search, &#11088; your favourites, and copy &mdash; then swap the [BRACKETS] for your specifics.</div>
+    <div class="pfilters">
+      <input type="text" id="hv-search" placeholder="&#128269; Search hooks...">
+      <button class="pbtn" id="hv-fav">&#11088; Favourites</button>
+      <span class="pmuted" id="hv-count" style="font-size:12.5px;margin-left:auto"></span>
+    </div>
+    <div class="pcard" id="hv-list"></div>`;
+  function draw(){
+    const f=LS.get(K_HOOKFAV,{});
+    const q=$('#hv-search').value.trim().toLowerCase();
+    const fo=$('#hv-fav').classList.contains('active');
+    let html='',n=0;
+    hooks.forEach((h,i)=>{
+      if(q&&h.toLowerCase().indexOf(q)<0)return;
+      if(fo&&!f[i])return;
+      n++;
+      html+=`<div class="phookrow"><span class="pn">${i+1}</span>
+        <span style="flex:1">${esc(h)}</span>
+        <span class="pstar${f[i]?' on':''}" data-hvfav="${i}" title="Favourite">&#11088;</span>
+        <button class="ptog" data-hvcopy="${i}">Copy</button></div>`;
+    });
+    $('#hv-list').innerHTML=html||'<div class="pmuted" style="font-size:12.5px;padding:8px">No hooks match.</div>';
+    $('#hv-count').textContent=n+' / '+hooks.length+' hooks';
+    $('#hv-list').querySelectorAll('[data-hvfav]').forEach(el=>el.addEventListener('click',()=>{
+      const s=LS.get(K_HOOKFAV,{}),i=el.dataset.hvfav;s[i]=!s[i];LS.set(K_HOOKFAV,s);draw();}));
+    $('#hv-list').querySelectorAll('[data-hvcopy]').forEach(b=>b.addEventListener('click',()=>{
+      try{navigator.clipboard.writeText(hooks[+b.dataset.hvcopy]);}catch(e){}
+      b.textContent='✓ Copied';setTimeout(()=>b.textContent='Copy',1300);}));
+  }
+  $('#hv-search').addEventListener('input',draw);
+  $('#hv-fav').addEventListener('click',e=>{e.target.classList.toggle('active');draw();});
+  draw();
+}
+
 /* ============================================================ NAV */
 const RENDERERS={thisweek:renderThisWeek,growth:renderGrowth,destinations:renderDestinations,
   board:renderBoard,calendar:renderCalendar,performance:renderPerformance,
   competitors:renderCompetitors,collabs:renderCollabs,
   caption:renderCaption,inbox:renderInbox,drone:renderDrone,layovers:renderLayovers,
-  library:renderLibrary,chicago:renderChicago,strategy:renderStrategy,
+  library:renderLibrary,hookvault:renderHookVault,chicago:renderChicago,strategy:renderStrategy,
   branddeals:renderBrandDeals,templates:renderTemplates,rates:renderRates,
   contracts:renderContracts,shootkit:renderShootKit,trends:renderTrends};
 const rendered={};
