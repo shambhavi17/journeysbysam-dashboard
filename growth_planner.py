@@ -1681,6 +1681,228 @@ COMPETITORS = {
     ],
 }
 
+# =============================================================================
+# 10. CREATOR TOOLKIT  — distilled from The Creator Passport workbooks & e-books
+#     (Pitching & Negotiating E-Book, Track 3 monetization, Track 1 photography)
+# =============================================================================
+TCP = {
+    # ---- Brand Deals: the pitching playbook -------------------------------
+    "pitch": {
+        "readiness": [
+            "I can prove ROI — case studies or results from past content",
+            "I can create high-resolution, unique content (camera, drone, etc.)",
+            "I have an above-average engagement rate",
+            "I have a strong, genuine community in my audience",
+            "I'm on multiple platforms (IG, TikTok, YouTube, blog)",
+            "The brand's target audience matches my demographics",
+            "I'm seen as an authority/expert in their niche",
+            "I can clearly articulate the VALUE I offer the brand",
+        ],
+        "findBrands": [
+            {"k": "ChatGPT", "v": "Ask it to find brands in your niche that run sponsored collabs, or to find a brand's PR/marketing contact."},
+            {"k": "Other creators", "v": "When a creator in your niche does a sponsored post, save it to a 'Potential Brand Collabs' folder. They already work with influencers."},
+            {"k": "Targeted ads", "v": "Screenshot the ads you get served — those brands are already targeting people like your audience."},
+            {"k": "Influencer platforms", "v": "Aspire IQ, Collabstr, #Paid, Tribe, Cohley — good for getting your foot in the door. Watch the licensing they sneak in."},
+            {"k": "Brands you already use", "v": "The products you genuinely love — pitch them with the DM-to-email flow."},
+            {"k": "Big retailer sites", "v": "Browse a retailer like REI by brand, then reach out to the smaller brands carried there."},
+        ],
+        "anatomy": [
+            {"part": "Subject line", "points": ["Simple format: YOUR HANDLE x BRAND NAME", "Avoid the words 'influencer' or 'collaboration' — they read as spam", "Concise, never clickbaity"]},
+            {"part": "Introduction", "points": ["Name / business name + hyperlinked handles", "The WHO & WHAT — what your pages are about", "WHY you love the brand"]},
+            {"part": "Body", "points": ["A deeper dive into what you love — show your brand research", "WHY you want to work with them + a timeline", "WHAT you offer in return — deliverables, exposure, analytics", "2–3 specific, unique creative ideas for them"]},
+            {"part": "Conclusion", "points": ["Thank them, invite a call", "Link/attach your media kit", "Turn on email tracking (e.g. MailTrack) before sending"]},
+        ],
+        "etiquette": [
+            "Find the RIGHT contact — pitches to the right person get read.",
+            "Follow the brand & engage with their content for ~1 week before pitching.",
+            "Don't mention budget/pricing in the first contact.",
+            "Goal: get them on a call — far higher close rate than email tag.",
+            "Professional email address, correct spelling of their name, attachments renamed.",
+            "When to send what: UGC → UGC portfolio · Sponsorship → media kit (+ case studies) · Hotel/tourism → photo portfolio too.",
+        ],
+        "followUp": {
+            "schedule": ["Send the pitch Tuesday morning", "No reply → follow up Thursday afternoon",
+                         "No reply → follow up the next Tuesday morning", "No reply → one more the following Monday",
+                         "Still nothing → move on (re-pitch later in the year)"],
+            "note": "Following up is the #1 thing people skip. Many brands reply on the 2nd or 3rd nudge — inboxes are chaos.",
+        },
+        "hotelCollabTypes": [
+            {"k": "Media rate", "v": "Just a 20–40% discount. You're basically paying to work — usually not worth it."},
+            {"k": "Complimentary room", "v": "Free room only; you still cover travel, food, excursions."},
+            {"k": "Hosted stay", "v": "They cover travel, F&B, and activities — everything except paying you for content."},
+            {"k": "Paid stay", "v": "They cover the stay AND pay you for content creation. The goal."},
+        ],
+        "hotelMistakes": [
+            "Not pitching boutique / new hotels — they need content most when you're starting.",
+            "A pitch that isn't specialised and unique to that exact property.",
+            "Not offering enough value (pitch as a photographer/creator, not 'influencer', under 10k).",
+            "Pitching during peak season — aim for the off-season (Dec–Mar for tourism).",
+            "Not pitching enough — smaller accounts need volume.",
+            "No portfolio — you NEED one to be taken seriously.",
+            "Asking for too much — outbound pitches rarely get cash unless it's a big chain campaign.",
+            "Not researching which hotels already worked with creators (check their tagged photos).",
+        ],
+        "collabPackages": [
+            {"k": "Low budget", "v": "1 in-feed Reel + 3 mo organic rights, cross-posted to TikTok; 3–5 stories/day during the stay."},
+            {"k": "Mid budget", "v": "2 in-feed Reels + 3 mo rights, cross-posted; potential whitelisting; 3–5 stories/day; 1 blog post."},
+            {"k": "High budget", "v": "3 Reels + 6 mo rights; whitelisting/paid usage; 3–5 stories/day; 1 blog; 1 YouTube video; 5–10 images w/ 1-yr digital rights."},
+        ],
+    },
+    # ---- Pitch Templates: ready-to-use, copy-able -------------------------
+    "templates": [
+        {"name": "Brand Sponsorship Pitch", "cat": "Sponsorship",
+         "body": "Subject: @journeysbysam x [BRAND NAME]\n\nHi [NAME]!\n\nI hope you're having a fantastic week! My name is Sam, the travel + Chicago lifestyle creator behind @journeysbysam. Over the last [X years] I've specialised in cinematic travel content that positions brands as must-haves for travel enthusiasts.\n\nI'm planning [TRIP IDEA / UNIQUE ANGLE] and would love to work together on a photo, video and/or social campaign featuring [PRODUCT]. My audience of travel lovers is always looking for things that make travel easier, and as a genuine fan of [PRODUCT] myself, I think it would convert well with them.\n\nA few content ideas I'd love to create for you:\n  - [IDEA 1]\n  - [IDEA 2]\n  - [IDEA 3]\n\nFor previous paid partnerships I've delivered beautifully shot, useful, entertaining content. I've linked my media kit HERE for reference, and I'd be happy to hop on a call to talk through ideas.\n\nThank you for considering this partnership — I'd love to create something inspiring for our travel communities.\n\nBest,\nSam"},
+        {"name": "UGC Pitch (small audience OK)", "cat": "UGC",
+         "body": "Subject: UGC content for [BRAND NAME]\n\nHi [BRAND NAME] Team,\n\nI hope you're having a great week! I'm Sam, a content creator specialising in high-converting user-generated content that helps brands lift engagement and paid-ad performance.\n\nI recently came across [BRAND NAME] and was drawn to [SPECIFIC PRODUCT / MISSION]. I brainstormed a few concepts that perform well on Reels, TikTok and paid ads:\n  - Problem -> Solution demo showing the transformation\n  - \"3 reasons I switched to...\" testimonial-style hook\n  - POV short-form ad built for retention + conversions\n\nI'd love to provide [X short-form videos / ad creatives] for your social channels and paid campaigns, and I'm happy to tailor a package to your goals and budget. My UGC portfolio is linked HERE.\n\nWould you be open to a quick 15-minute call to align on goals?\n\nThank you!\nSam"},
+        {"name": "Hotel / Airbnb Pitch", "cat": "Travel",
+         "body": "Subject: [HOTEL NAME] x @journeysbysam\n\nGood morning [CONTACT NAME],\n\nI hope you're doing well! I'm Sam, a professional travel content creator and photographer known as @journeysbysam. I create travel content that positions destinations and properties as the best places to visit.\n\nI'll be visiting [LOCATION] in [DATES] and would love to highlight your incredible property. [HOTEL NAME] looks wonderful — especially [SPECIFIC FEATURE YOU LOVE] — and I think it would resonate with my audience because [REASON].\n\nI'd love to provide [DELIVERABLES — e.g. 1 Reel cross-posted to TikTok, 3–5 stories/day, a set of high-res images] for your social channels and listing, in exchange for [WHAT YOU'RE ASKING — paid stay / hosted stay]. I'm happy to tailor a package to your marketing needs.\n\nMy media kit is linked HERE and my portfolio HERE. I'd love to find a way to work together — thank you for your time!\n\nBest,\nSam"},
+        {"name": "Tourism Board Pitch", "cat": "Travel",
+         "body": "Subject: [DESTINATION] x @journeysbysam\n\nGood morning [CONTACT NAME],\n\nI hope you're doing well! I'm Sam, a professional travel content creator known as @journeysbysam. I create travel content highlighting destinations as the best spots for travel enthusiasts.\n\nI'll be visiting [LOCATION] in [TIMEFRAME] and would love to showcase your destination. I think [LOCATION FEATURES] would resonate with my audience of [AUDIENCE PROFILE] because [REASON].\n\nI'd be interested in providing [VALUE — high-res photos, Reels, TikTok, blog post] for your social channels and website in exchange for [WHAT YOU'RE ASKING]. I've run similar campaigns for [PAST CLIENTS] with strong ROI in reach and engagement.\n\nMy media kit is linked HERE and portfolio HERE. I'd love to find a way to work together — thank you so much for your time!\n\nBest,\nSam"},
+        {"name": "PR List Request", "cat": "Sponsorship",
+         "body": "Subject: @journeysbysam x [BRAND NAME]\n\nHi [BRAND NAME] Team,\n\nI'm Sam, the creator behind @journeysbysam, focused on travel + Chicago lifestyle content. I've been a fan of [BRAND] for a while — especially your [SPECIFIC THING].\n\nGiven the natural alignment between our values and audiences, I'd love to join your influencer PR list. My account engages [REACH / ENGAGEMENT STATS] across [PLATFORMS], with an audience passionate about [FOCUS].\n\nWhether through organic integrations, stories or reviews, I'd love to share [BRAND]'s products with my highly engaged community. Happy to send my media kit or past examples.\n\nThank you for considering — I'd love to create impactful content together.\n\nBest,\nSam"},
+        {"name": "DM Contact Request", "cat": "Finding contacts",
+         "body": "Hi [BRAND] Team!\n\nMy name is Sam and I'm a professional travel content creator & photographer known as @journeysbysam. Is there a particular email or person to reach out to about a potential photography, videography or social media partnership?\n\nThank you so much — I look forward to hearing from you!\n\nBest,\nSam"},
+        {"name": "Follow-Up Email", "cat": "Follow-up",
+         "body": "Hi [NAME],\n\nI just wanted to follow up on my previous email about a potential content collaboration! I've attached my media kit again for reference — it takes a deeper dive into my analytics, portfolio and past client work.\n\nLooking forward to hearing from you soon!\n\nBest,\nSam"},
+        {"name": "Pitch With Footage You Already Shot", "cat": "UGC",
+         "body": "Subject: Content I already created featuring [BRAND/PRODUCT]\n\nHi [NAME],\n\nI hope you're having a great week! I'm Sam, a travel content creator specialising in short-form video. I recently created a series of high-quality videos featuring [BRAND/PRODUCT] during [TRIP/CONTEXT], and after reviewing the footage I realised it aligns perfectly with your current campaign direction.\n\nRather than letting it sit unused, I'd love to turn this into a UGC or sponsored partnership. I've already captured product-focused lifestyle clips, close-up detail shots, and short-form vertical edits optimised for paid ads. Because it's already shot and edited, your team could skip production timelines and launch immediately.\n\nI'd love to send a private (watermarked) preview link. Would you be open to a quick 15-minute call this week?\n\nBest,\nSam"},
+    ],
+    # ---- Rates & Negotiation ----------------------------------------------
+    "rates": {
+        "formula": "Creative Fee  +  Influencer/Audience Fee  +  Licensing/Usage Fee  =  Your Total Price",
+        "tiers": [
+            {"tier": "Nano (1k–10k)", "rate": "$10–$100 / post"},
+            {"tier": "Micro (10k–100k)", "rate": "$100–$500 / post"},
+            {"tier": "Mid (100k–500k)", "rate": "$500–$5,000 / post"},
+            {"tier": "Macro (500k–1M)", "rate": "$5,000–$10,000 / post"},
+            {"tier": "Mega (1M+)", "rate": "$10,000+ / post"},
+        ],
+        "rules": [
+            "IG in-feed base rate: industry minimum is ~1% of your follower count (100k followers = ~$1,000/post).",
+            "IG story base rate: roughly 5–10% of impressions (recent avg views x ~$0.06).",
+            "High engagement? Charge ~50% above the standard rate.",
+            "Rush job (delivery within a week)? Add a minimum 10% rush fee.",
+            "UGC content fee: beginners $150–$300/video, intermediate $500–$750, advanced $1,000–$2,500. Charging more is fine.",
+            "Never send a flat rate card cold — first ask the brand for deliverables, licensing and duration, THEN quote.",
+        ],
+        "chargeMore": ["Higher-than-average engagement rate", "Reels vs carousel vs stories",
+                       "Professional vs phone content quality", "Rushed client timeline",
+                       "Production costs — travel, gear, hiring", "Link-in-bio, story highlights, special requests"],
+        "usage": [
+            {"k": "Organic social reposting", "v": "+15% of base rate per 30 days (often 3 months included free)"},
+            {"k": "Paid social / ads", "v": "+30% of base rate per 30 days"},
+            {"k": "Digital (website, email, whitelisting)", "v": "+30% per 30 days"},
+            {"k": "Print (billboards, in-store)", "v": "+60% per 30 days"},
+            {"k": "Whitelisting / boosting", "v": "+20–30% per 30 days (recommend 30%)"},
+            {"k": "Dark posting", "v": "+15% of base fee per 30 days"},
+            {"k": "Exclusivity", "v": "+30% (easy) to +50–100% (hard) of base rate per 30 days"},
+            {"k": "In perpetuity", "v": "Roughly base cost x 3 years of usage. Avoid it — or charge a LOT. Never give away copyright."},
+        ],
+        "principles": [
+            "Never take the first offer without negotiating — many brands are told to never accept their first pitch either.",
+            "No deal is better than a bad deal — be willing to walk away.",
+            "Use tactical empathy — frame your collab as a solution to the brand's actual goal.",
+            "Turn weaknesses into strengths — new? Lead with engagement rate + niche audience.",
+            "Get them on a call — a face to a name closes more and earns repeat work.",
+            "Highlight your unique selling points — what they can't get from another creator.",
+            "Use social proof — past results, ROI numbers, testimonials.",
+            "Be flexible — offer tiers so the brand can pick what fits their budget.",
+        ],
+        "scripts": [
+            {"name": "When a brand asks for your rates", "body": "Hi [BRAND] Team!\n\nThank you so much for getting back to me — I'm excited you might be interested in a paid partnership!\n\nIn terms of rates, here's my standard pricing:\n  - IG Story (3 frames): $[X]\n  - IG Reel: $[X]\n  - IG Carousel: $[X]\n  - IG Reel syndicated to TikTok: $[X]\n  - Giveaway add-on: +$[X]\n\nThree months of organic social usage is included; paid usage, content ownership or extended exclusivity would be an additional fee determined by the scope of work.\n\nI also offer discounted content bundles. Happy to hop on a call to dive into your campaign objectives!\n\nBest,\nSam"},
+            {"name": "Asked for rates — but you need more info", "body": "Hi [BRAND] Team!\n\nThank you so much for getting back to me — I'm excited about a potential paid partnership!\n\nI offer a range of partnership options tailored to different campaign goals and budgets. Do you have a budget in mind? And could you confirm the usage and exclusivity guidelines you had in mind?\n\nI'd love to understand more about your marketing goals so I can send a customised proposal that offers the most value. Could we schedule a quick call? I'm available [TIMES] but flexible.\n\nLooking forward to it!\n\nBest,\nSam"},
+            {"name": "Countering a lowball offer", "body": "Dear [NAME],\n\nThank you for the offer and for considering me for this collaboration with [BRAND] — I'm genuinely enthusiastic about the alignment between [BRAND]'s values and my audience.\n\nHaving reviewed the proposed terms, I wanted to discuss compensation. Based on the scope of work and the reach, engagement and production involved, my standard rate for a collaboration of this nature is [YOUR COUNTER OFFER].\n\nThat said, I understand budgets — we could adjust the scope: reduce the number of deliverables, focus on a different content type, or extend the timeline. I'm confident in the value this partnership can bring and I'd love to find a mutually beneficial agreement.\n\nThank you again — I look forward to creating something impactful for [BRAND].\n\nBest,\nSam"},
+            {"name": "\"I don't work for free\" (exchange -> paid)", "body": "Hi [NAME],\n\nThank you so much for reaching out and for your interest in working with me! Your products look great and would be a perfect fit for my audience.\n\nUnfortunately I can't accept product-exchange or unpaid collaborations. Given the work that goes into creating unique, high-quality content that resonates with my audience and represents your brand, I charge a fee for content creation on top of promotion on my page.\n\nI'd be happy to send over my rates if you're interested — I look forward to potentially working together!\n\nBest,\nSam"},
+            {"name": "Rejecting an affiliate-only offer", "body": "Hi [NAME],\n\nThank you so much for reaching out! Your products look great and I believe they'd be a perfect fit for my audience.\n\nBecause content creation is my full-time business, I prioritise paid partnerships over affiliate-only collaborations at this time. I'd be happy to send my rates if you're interested in a sponsored partnership — please keep me in mind should any paid opportunities arise!\n\nThanks so much,\nSam"},
+            {"name": "Brand snuck exclusivity into the contract", "body": "Hi there!\n\nWhile going through the contract, I wanted to flag the exclusivity section since this wasn't previously discussed. I charge an additional fee for exclusivity, as I'd have to turn down future paid collaborations with other brands.\n\nI charge $[X] per month for exclusivity. Please let me know if you'd like to add this charge or strike the clause. Thanks so much!\n\nBest,\nSam"},
+            {"name": "Brand snuck ownership / full rights in", "body": "Hi there!\n\nWhile going through the contract I wanted to flag the Intellectual Property section. Section [XYZ] states the brand would have ownership/full rights of the content I create — this wasn't discussed in our negotiations, and ownership of copyright is significantly more expensive.\n\nI'd like to change it to a Grant of Rights / licensing section instead, reflecting the [X months] of paid social usage we discussed. Looking forward to the amended agreement!\n\nBest,\nSam"},
+            {"name": "Responding to rejection", "body": "Hi [NAME],\n\nThanks for getting back to me so quickly — I completely understand, and thank you for your time! I've attached my current media kit so you can keep my info on file should any opportunities arise in the future.\n\nHope you have a fantastic rest of your week.\n\nBest,\nSam"},
+        ],
+    },
+    # ---- Contracts & Money ------------------------------------------------
+    "contracts": {
+        "checklist": [
+            {"cat": "Name & contact", "items": ["Contract made out to your name / LLC, spelled correctly", "Your current address is correct"]},
+            {"cat": "Dates & timeline", "items": ["Term dates, approval dates, live dates checked", "Is the timeline realistic — or do you need a rush fee?", "Your ad calendar isn't over-stuffed with sponsored content"]},
+            {"cat": "Payment", "items": ["Payment amount is correct", "Payment terms — Net 30 / Net 60 (push anything over Net 60 down)", "Optional: 50% retainer up front, 50% on delivery", "Third-party platform fees covered on their end"]},
+            {"cat": "Deliverables", "items": ["Deliverables match what you agreed in prior messages", "No extra assets slipped in"]},
+            {"cat": "FTC", "items": ["Required disclosure words present and placed where requested", "Flag specific requests — Paid Partnership tool, #ad as first word"]},
+            {"cat": "License & usage", "items": ["Usage matches agreed terms", "Organic usage usually included; whitelisting / dark posting / paid are extra", "A clause crediting you for your content", "You retain copyright ownership — offer a 'Grant of License' instead"]},
+            {"cat": "Exclusivity", "items": ["Exclusivity matches what you agreed", "Term length — don't sign more than ~1 month without big compensation", "Which competitors are off-limits, in writing", "Does it cover only sponsored, or organic too?"]},
+            {"cat": "Approvals & add-ons", "items": ["Reshoot clause — offer 1 round of revisions", "How fast they want analytics (stories ~24h, rest ~2 weeks)", "Add a fee for link-in-bio, story highlights, collab posts"]},
+        ],
+        "redFlags": [
+            "Single indemnity clause — only YOU indemnify them (you want mutual / double indemnity).",
+            "Trying to gain copyright or all-rights transfer — especially with 'in perpetuity'.",
+            "Exclusivity slipped in without being discussed.",
+            "Contract made out to the wrong party / not your name or LLC.",
+            "Unfavourable payment terms — Net 60 after a post goes live can mean months of waiting.",
+        ],
+        "greenFlags": [
+            "Reasonable reshoot clause — protects both sides if guidelines are followed.",
+            "A Grant of Rights / licensing clause — you keep ownership, they get a license.",
+            "Clear exclusivity — duration, sponsored-only, named competitors all specified.",
+            "Reasonable deadlines, fair payment terms, a clear dispute-resolution process, double indemnity.",
+        ],
+        "ftc": [
+            "Disclose any sponsored, gifted or affiliate link — on every platform.",
+            "Disclosure must be CLEAR ('This post contains affiliate links') and CONSPICUOUS (easy to notice, near the link).",
+            "Amazon Associates requires: 'As an Amazon Associate I earn from qualifying purchases.'",
+            "Transparency builds trust — your audience trusts you more when you're upfront.",
+        ],
+        "postCampaign": [
+            "Campaign report — reach, impressions, comments, saves, sends, likes, link clicks (build it in Canva). Send ~2–3 weeks after, once posts mature.",
+            "Invoice — include late fees, payment details. Track due dates and follow up if unpaid.",
+            "Go long-term — 3–4 weeks later, reach back out about ongoing partnership opportunities.",
+            "Get a testimonial — if they can't rework now, ask for one for your portfolio.",
+        ],
+        "bizTax": [
+            "Preferred structure: an LLC — combines pass-through tax simplicity with personal-liability protection.",
+            "Contract in your LLC's name keeps personal assets separate from business liabilities.",
+            "US freelancers pay quarterly estimated taxes — roughly Apr 15, Jun 17, Sep 16, Jan 15.",
+            "Expect a 1099-NEC/1099-K if paid over $600 by a client (incl. Venmo/PayPal).",
+            "Separate business & personal bank accounts. Track itemised receipts, mileage, and gifted products (gifts count as taxable income).",
+            "Set money aside for taxes all year so cash flow doesn't get crushed at filing time.",
+        ],
+    },
+    # ---- Shoot Kit: photography reference ---------------------------------
+    "shoot": {
+        "settings": [
+            {"k": "Sunny landscape", "v": "f/8 · 1/400 · ISO 100"},
+            {"k": "Cloudy landscape", "v": "f/4 · 1/250 · ISO 400"},
+            {"k": "Golden hour glow", "v": "f/4 · 1/250 · ISO 400"},
+            {"k": "Blue hour", "v": "f/4 · 1/125 · ISO 800"},
+            {"k": "Astrophotography", "v": "f/2.8 · 30\" · ISO 2500"},
+            {"k": "Portraits", "v": "f/2.8 · 1/500 · ISO 200"},
+            {"k": "Fast waterfall", "v": "f/8 · 1/500 · ISO 400"},
+            {"k": "Slow / silky waterfall", "v": "f/11 · 1/3 · ISO 100"},
+            {"k": "Moving cars", "v": "f/8 · 1/500 · ISO 800"},
+            {"k": "Light trails", "v": "f/2.8 · 10\" · ISO 1250"},
+            {"k": "Sun flare", "v": "f/22 · 1/125 · ISO 500"},
+            {"k": "From a helicopter / drone", "v": "f/4 · 1/1000 · ISO 200"},
+        ],
+        "lenses": [
+            {"k": "16–35mm f/2.8 (ultra-wide)", "v": "Best for wide landscapes & tight spaces. Can distort close subjects."},
+            {"k": "24–70mm f/2.8 (zoom)", "v": "Most versatile — wide to portrait. Heavy, no stabilisation."},
+            {"k": "50mm f/1.4 (or f/1.8)", "v": "Portraits & products, beautiful bokeh, lightweight & affordable."},
+            {"k": "70–200mm f/2.8 (telephoto)", "v": "Compression, portraits — heavy to pack."},
+            {"k": "100–500mm", "v": "Wildlife & sports — long reach, expensive."},
+        ],
+        "exports": [
+            "Reels / Stories / TikTok: 1080x1920, 9:16",
+            "Carousel posts: 1080x1350, 4:5",
+            "Lightroom export: JPEG, sRGB, ~76–80% quality (IG compresses anyway), 72ppi",
+            "YouTube video: 1280x720 minimum HD",
+        ],
+        "aiPrompts": [
+            {"name": "Itinerary script", "body": "Write me a video script for a trip through [DESTINATION]. You are a professional travel agent who knows [DESTINATION] very well. Our audience is [AGE]-year-old [AUDIENCE] looking to [GOAL]. The goal of this video is to create an itinerary for [TIMEFRAME]. There will be [N] characters. I want a [LENGTH]-second script and a shot list."},
+            {"name": "Storytelling script", "body": "Write me a storytelling video script for [TOPIC]. You are a professional cinematographer who knows [SUBJECT] very well. Our audience is [AGE]-year-old [AUDIENCE]. The goal is to tell a story about [SUBJECT] in [TIMEFRAME]. I want a [LENGTH]-second script and a shot list."},
+            {"name": "How-to script", "body": "Write me a how-to video script to create a tutorial for [TOPIC]. You are an expert in [SUBJECT]. Our audience is [AGE]-year-old [AUDIENCE] looking to learn [SKILL]. I want a [LENGTH]-second tutorial script and a shot list."},
+            {"name": "Review script", "body": "Write me a script for a full review of [PRODUCT]. You know everything about [SUBJECT]. Our audience wants a product review of [PRODUCT]. Highlight [FEATURES]. I want a [LENGTH]-second script and a shot list."},
+        ],
+    },
+}
+
 # build the full data object the front-end consumes
 PLANNER_DATA = {
     "growth": GROWTH,
@@ -1695,6 +1917,7 @@ PLANNER_DATA = {
     "hashtags": EXCEL.get("hashtags", []),
     "chicago": CHICAGO,
     "competitors": COMPETITORS,
+    "tcp": TCP,
 }
 
 # =============================================================================
@@ -2076,6 +2299,11 @@ PLANNER_BODY = r"""
     <button class="psubtab" data-sec="library">&#128218; Content Library</button>
     <button class="psubtab" data-sec="chicago">&#127956;&#65039; Chicago Playbook</button>
     <button class="psubtab" data-sec="strategy">&#128640; Posting Strategy</button>
+    <button class="psubtab" data-sec="branddeals">&#128188; Brand Deals</button>
+    <button class="psubtab" data-sec="templates">&#9993;&#65039; Pitch Templates</button>
+    <button class="psubtab" data-sec="rates">&#128176; Rates &amp; Negotiation</button>
+    <button class="psubtab" data-sec="contracts">&#128203; Contracts &amp; Money</button>
+    <button class="psubtab" data-sec="shootkit">&#128247; Shoot Kit</button>
     <button class="psubtab" data-sec="trends">&#128300; Trend Lab</button>
   </div>
 
@@ -2094,6 +2322,11 @@ PLANNER_BODY = r"""
   <div class="psec" id="psec-library"></div>
   <div class="psec" id="psec-chicago"></div>
   <div class="psec" id="psec-strategy"></div>
+  <div class="psec" id="psec-branddeals"></div>
+  <div class="psec" id="psec-templates"></div>
+  <div class="psec" id="psec-rates"></div>
+  <div class="psec" id="psec-contracts"></div>
+  <div class="psec" id="psec-shootkit"></div>
   <div class="psec" id="psec-trends"></div>
 </div>
 """
@@ -3341,13 +3574,159 @@ function renderCollabs(){
     const l=LS.get(K_COLLAB,[]);l.splice(+b.dataset.coldel,1);LS.set(K_COLLAB,l);renderCollabs();}));
 }
 
+/* ============================================================ CREATOR TOOLKIT */
+function copyBlock(text){
+  return `<div class="pcopywrap">
+    <textarea class="pcapout pcopysrc" readonly>${esc(text)}</textarea>
+    <div style="margin-top:8px"><button class="pbtn pbtn-accent pcopybtn">&#128203; Copy</button>
+      <span class="psaved pcopymsg"></span></div></div>`;
+}
+function wireCopy(root){
+  root.querySelectorAll('.pcopywrap').forEach(w=>{
+    const ta=w.querySelector('.pcopysrc'),btn=w.querySelector('.pcopybtn'),msg=w.querySelector('.pcopymsg');
+    btn.addEventListener('click',()=>{
+      ta.select();
+      try{navigator.clipboard.writeText(ta.value);}catch(e){try{document.execCommand('copy');}catch(e2){}}
+      msg.textContent=' ✓ copied';setTimeout(()=>msg.textContent='',1500);
+    });
+  });
+}
+function renderBrandDeals(){
+  const p=PLANNER.tcp.pitch,checks=LS.get(K_CHECK,{});
+  const readiness=p.readiness.map((c,i)=>{const on=checks['tcpr'+i];
+    return `<div class="pcheck${on?' on':''}" data-chk="tcpr${i}"><div class="pbox">${on?'✓':''}</div><span>${esc(c)}</span></div>`;}).join('');
+  const find=p.findBrands.map(f=>`<div class="pcard"><div class="pbadge pb-lav">${esc(f.k)}</div>
+    <div class="pmuted" style="margin-top:7px">${esc(f.v)}</div></div>`).join('');
+  const anatomy=p.anatomy.map(a=>`<div class="pcard"><div class="pbadge pb-blush">${esc(a.part)}</div>
+    <ul class="pfield" style="margin-top:6px">${a.points.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
+  const collab=p.hotelCollabTypes.map(c=>`<div class="plib-field"><b>${esc(c.k)}</b>${esc(c.v)}</div>`).join('');
+  const pkgs=p.collabPackages.map(c=>`<div class="pcard"><div class="pbadge pb-gold">${esc(c.k)}</div>
+    <div class="pmuted" style="margin-top:7px">${esc(c.v)}</div></div>`).join('');
+  $('#psec-branddeals').innerHTML=`
+    <div class="pseched">Brand Deals</div>
+    <div class="psecdesc">The pitching playbook &mdash; from "am I ready" to landing the collab.</div>
+    <div class="pblock-title">Before You Pitch &mdash; Readiness Check</div>
+    <div class="pcard">${readiness}</div>
+    <div class="pblock-title">How to Find Brands</div>
+    <div class="pgrid pg3">${find}</div>
+    <div class="pblock-title">Anatomy of a Pitch Email</div>
+    <div class="pgrid pg2">${anatomy}</div>
+    <div class="pblock-title">Email Etiquette</div>
+    <div class="pcard"><ul class="pfield">${p.etiquette.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+    <div class="pblock-title">Follow-Up Cadence</div>
+    <div class="pcard">${p.followUp.schedule.map((s,i)=>`<div class="pstep"><span class="pnum">${i+1}</span><span>${esc(s)}</span></div>`).join('')}
+      <div class="phook" style="margin-top:10px">${esc(p.followUp.note)}</div></div>
+    <div class="pblock-title">Ways to Work With Hotels</div>
+    <div class="pcard">${collab}</div>
+    <div class="pblock-title">Hotel Pitching Mistakes to Avoid</div>
+    <div class="pcard"><ul class="pfield">${p.hotelMistakes.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+    <div class="pblock-title">Sample Collaboration Packages</div>
+    <div class="pgrid pg3">${pkgs}</div>`;
+  $('#psec-branddeals').querySelectorAll('[data-chk]').forEach(el=>el.addEventListener('click',()=>{
+    const c=LS.get(K_CHECK,{});c[el.dataset.chk]=!c[el.dataset.chk];LS.set(K_CHECK,c);renderBrandDeals();}));
+}
+function renderTemplates(){
+  const T=PLANNER.tcp.templates;
+  const cards=T.map(t=>`<div class="pcard">
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+      <h3 style="font-family:var(--p-serif);font-size:20px;font-weight:600">${esc(t.name)}</h3>
+      <span class="pbadge pb-lav" style="margin-left:auto">${esc(t.cat)}</span></div>
+    ${copyBlock(t.body)}</div>`).join('');
+  $('#psec-templates').innerHTML=`
+    <div class="pseched">Pitch Templates</div>
+    <div class="psecdesc">${T.length} ready-to-use pitch templates, pre-filled for @journeysbysam. Copy, swap the [BRACKETS], send.</div>
+    <div class="pgrid pg2">${cards}</div>`;
+  wireCopy($('#psec-templates'));
+}
+function renderRates(){
+  const r=PLANNER.tcp.rates;
+  const tiers=r.tiers.map(t=>`<tr><td><b>${esc(t.tier)}</b></td><td>${esc(t.rate)}</td></tr>`).join('');
+  const usage=r.usage.map(u=>`<tr><td><b>${esc(u.k)}</b></td><td>${esc(u.v)}</td></tr>`).join('');
+  const principles=r.principles.map((x,i)=>`<div class="pcard">
+    <div class="pbadge pb-blush">Principle ${i+1}</div>
+    <div class="pmuted" style="margin-top:6px">${esc(x)}</div></div>`).join('');
+  const scripts=r.scripts.map(s=>`<div class="pdest"><div class="pdest-head">
+    <span class="pdest-emoji">&#128172;</span><div><h3>${esc(s.name)}</h3>
+    <div class="pdest-sub">Negotiation script</div></div><span class="pdest-chevron">&#9660;</span></div>
+    <div class="pdest-body">${copyBlock(s.body)}</div></div>`).join('');
+  $('#psec-rates').innerHTML=`
+    <div class="pseched">Rates &amp; Negotiation</div>
+    <div class="psecdesc">How to price your work and hold your ground when a brand responds.</div>
+    <div class="pgoal-hero" style="padding:22px">
+      <div style="font-family:var(--p-serif);font-size:21px;font-weight:600;color:var(--p-ink)">${esc(r.formula)}</div></div>
+    <div class="pgrid pg2" style="margin-top:18px">
+      <div><div class="pblock-title" style="margin-top:6px">Influencer Fee Tiers</div>
+        <div class="pcard"><table class="pmonth"><thead><tr><th>Tier</th><th>Minimum rate</th></tr></thead><tbody>${tiers}</tbody></table></div></div>
+      <div><div class="pblock-title" style="margin-top:6px">Pricing Rules of Thumb</div>
+        <div class="pcard"><ul class="pfield">${r.rules.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></div>
+    </div>
+    <div class="pblock-title">Reasons to Charge More</div>
+    <div class="pcard"><div class="pchips">${r.chargeMore.map(c=>`<span class="pchip">${esc(c)}</span>`).join('')}</div></div>
+    <div class="pblock-title">Licensing &amp; Usage Cheat Sheet</div>
+    <div class="psecdesc">Add on top of your base rate. ~3 months of organic social usage is normally included free.</div>
+    <div class="pcard"><table class="pmonth"><thead><tr><th>Usage type</th><th>Add to base rate</th></tr></thead><tbody>${usage}</tbody></table></div>
+    <div class="pblock-title">8 Negotiation Principles</div>
+    <div class="pgrid pg2">${principles}</div>
+    <div class="pblock-title">Negotiation Scripts</div>
+    <div class="psecdesc">Tap to expand, then copy. Swap the [BRACKETS] for your numbers.</div>
+    <div class="pgrid" style="gap:12px">${scripts}</div>`;
+  $('#psec-rates').querySelectorAll('.pdest-head').forEach(h=>h.addEventListener('click',()=>
+    h.parentElement.classList.toggle('open')));
+  wireCopy($('#psec-rates'));
+}
+function renderContracts(){
+  const c=PLANNER.tcp.contracts;
+  const checklist=c.checklist.map(cat=>`<div class="pcard">
+    <div class="pbadge pb-lav">${esc(cat.cat)}</div>
+    <ul class="pfield" style="margin-top:7px">${cat.items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
+  $('#psec-contracts').innerHTML=`
+    <div class="pseched">Contracts &amp; Money</div>
+    <div class="psecdesc">Read every contract before you sign &mdash; catch the red flags, keep your copyright, get paid on time.</div>
+    <div class="pblock-title">Contract Review Checklist</div>
+    <div class="pgrid pg2">${checklist}</div>
+    <div class="pgrid pg2" style="margin-top:18px">
+      <div class="pcard"><div class="pbadge pb-blush">&#128681; Red Flags</div>
+        <ul class="pfield" style="margin-top:7px">${c.redFlags.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+      <div class="pcard"><div class="pbadge pb-sage">&#9989; Green Flags</div>
+        <ul class="pfield" style="margin-top:7px">${c.greenFlags.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+    </div>
+    <div class="pblock-title">FTC Disclosure</div>
+    <div class="pcard"><ul class="pfield">${c.ftc.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+    <div class="pblock-title">After the Campaign</div>
+    <div class="pcard">${c.postCampaign.map((s,i)=>`<div class="pstep"><span class="pnum">${i+1}</span><span>${esc(s)}</span></div>`).join('')}</div>
+    <div class="pblock-title">Business &amp; Taxes</div>
+    <div class="pwarn" style="margin-bottom:10px"><b>&#9888;&#65039; Not financial advice.</b> General guidance only &mdash; consult a tax professional.</div>
+    <div class="pcard"><ul class="pfield">${c.bizTax.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+}
+function renderShootKit(){
+  const s=PLANNER.tcp.shoot;
+  const settings=s.settings.map(x=>`<tr><td><b>${esc(x.k)}</b></td><td>${esc(x.v)}</td></tr>`).join('');
+  const lenses=s.lenses.map(l=>`<div class="plib-field"><b>${esc(l.k)}</b>${esc(l.v)}</div>`).join('');
+  const prompts=s.aiPrompts.map(pr=>`<div class="pcard"><div class="pbadge pb-lav">${esc(pr.name)}</div>
+    <div style="margin-top:8px">${copyBlock(pr.body)}</div></div>`).join('');
+  $('#psec-shootkit').innerHTML=`
+    <div class="pseched">Shoot Kit</div>
+    <div class="psecdesc">Camera settings, lenses and export specs &mdash; plus AI script prompts.</div>
+    <div class="pblock-title">Camera Settings Cheat Sheet</div>
+    <div class="pcard"><table class="pmonth"><thead><tr><th>Scenario</th><th>Aperture &middot; Shutter &middot; ISO</th></tr></thead><tbody>${settings}</tbody></table></div>
+    <div class="pblock-title">Which Lens?</div>
+    <div class="pcard">${lenses}</div>
+    <div class="pblock-title">Export Specs</div>
+    <div class="pcard"><ul class="pfield">${s.exports.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+    <div class="pblock-title">AI Script Prompts</div>
+    <div class="psecdesc">Paste into ChatGPT and fill the [BRACKETS].</div>
+    <div class="pgrid pg2">${prompts}</div>`;
+  wireCopy($('#psec-shootkit'));
+}
+
 /* ============================================================ NAV */
 const RENDERERS={thisweek:renderThisWeek,growth:renderGrowth,destinations:renderDestinations,
   board:renderBoard,calendar:renderCalendar,performance:renderPerformance,
   competitors:renderCompetitors,collabs:renderCollabs,
   caption:renderCaption,inbox:renderInbox,drone:renderDrone,layovers:renderLayovers,
-  library:renderLibrary,chicago:renderChicago,
-  strategy:renderStrategy,trends:renderTrends};
+  library:renderLibrary,chicago:renderChicago,strategy:renderStrategy,
+  branddeals:renderBrandDeals,templates:renderTemplates,rates:renderRates,
+  contracts:renderContracts,shootkit:renderShootKit,trends:renderTrends};
 const rendered={};
 function showSec(sec){
   document.querySelectorAll('#psubnav .psubtab').forEach(t=>
