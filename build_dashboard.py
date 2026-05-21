@@ -223,6 +223,19 @@ by_owner = defaultdict(list)
 for p in comp_data:
     by_owner[p.get("ownerUsername")].append(p)
 
+
+def _ext_metrics(plist):
+    """Deeper comparison metrics that work for any raw post list."""
+    likes = [g(p, "likesCount") for p in plist]
+    caps = [len(p.get("caption") or "") for p in plist]
+    med = statistics.median(likes) if likes else 0
+    breakouts = sum(1 for l in likes if med and l >= 2 * med)
+    return {
+        "avgCaption": round(statistics.mean(caps)) if caps else 0,
+        "breakoutRate": round(breakouts / len(plist) * 100) if plist else 0,
+    }
+
+
 comp_accounts = []
 for handle, plist in by_owner.items():
     likes = [g(p, "likesCount") for p in plist]
@@ -243,6 +256,7 @@ for handle, plist in by_owner.items():
         "perWeek": round(len(plist) / span * 7, 1),
         "avgHashtags": round(statistics.mean(htc), 1),
         "topHooks": [hook_of(p) for p in tops],
+        **_ext_metrics(plist),
     })
 comp_accounts.sort(key=lambda c: c["avgLikes"], reverse=True)
 
@@ -265,7 +279,24 @@ you_bench = {
     "topHooks": [p["hook"] for p in top_eng_abs[:3]],
     "isYou": True,
 }
+you_bench.update(_ext_metrics(data))
 benchmark = [you_bench] + comp_accounts
+
+# ---- deeper competitor insights ----
+_big = comp_accounts[0]                                    # highest avg likes
+_chatty = max(comp_accounts, key=lambda c: c["avgComments"])  # most comments
+comp_deep = [
+    {"title": "Comment-gating beats raw reach",
+     "detail": f"@{_chatty['handle']} averages {_chatty['avgComments']} comments a post — even though its {_chatty['avgLikes']:,} avg likes sit far below @{_big['handle']}'s {_big['avgLikes']:,}. Its '‼️ comment for the location' CTA manufactures comments. You average {you_bench['avgComments']}. Comment-gate every Reel."},
+    {"title": "Caption length & Instagram SEO",
+     "detail": f"Your captions average {you_bench['avgCaption']} characters vs {_big['avgCaption']} for @{_big['handle']} and {_chatty['avgCaption']} for @{_chatty['handle']}. Instagram now searches caption text — a keyword-rich first line and real context keep posts findable for weeks."},
+    {"title": "Breakout rate — how often posts swing big",
+     "detail": f"{you_bench['breakoutRate']}% of your posts beat 2× your own median; @{_big['handle']} hits {_big['breakoutRate']}%. Even big accounts mostly post 'normal' content — a few deliberate big swings move the average. Plan 1–2 a month."},
+    {"title": "Hashtags per post",
+     "detail": f"You use {you_bench['avgHashtags']} hashtags/post; @{_big['handle']} uses {_big['avgHashtags']}, @{_chatty['handle']} {_chatty['avgHashtags']}. With Instagram's 5-tag cap, make each one count — 1 branded + 4 niche/destination tags."},
+    {"title": "The reach ceiling",
+     "detail": f"Your best post hit {you_bench['maxLikes']:,} likes; @{_big['handle']}'s best hit {_big['maxLikes']:,}. That gap is topic + hook, not talent — broadly shareable, aspirational posts are how you lift your own ceiling."},
+]
 
 gap_analysis = [
     {"title": "Your engagement ceiling is hooks, not effort",
@@ -319,6 +350,7 @@ payload = {
     "benchmark": benchmark,
     "gapAnalysis": gap_analysis,
     "whatToAdd": what_to_add,
+    "compDeep": comp_deep,
 }
 
 J = json.dumps(payload)
@@ -495,7 +527,13 @@ __PLANNER_CSS__
   <div class="grid2" style="margin-top:18px">
     <div class="card"><h3>Avg Likes per Post (log scale)</h3><div class="chart-box"><canvas id="compLikesChart"></canvas></div></div>
     <div class="card"><h3>Avg Comments &amp; Posts / Week</h3><div class="chart-box"><canvas id="compEngChart"></canvas></div></div>
+    <div class="card"><h3>Avg Caption Length (characters)</h3><div class="chart-box"><canvas id="compCaptionChart"></canvas></div></div>
+    <div class="card"><h3>Breakout Rate — posts beating 2&times; own median</h3><div class="chart-box"><canvas id="compBreakoutChart"></canvas></div></div>
   </div>
+
+  <div class="section-title">Deeper Competitor Insights</div>
+  <div class="section-desc">What the numbers reveal beyond likes — and how to close each gap.</div>
+  <div class="grid2" id="compDeep"></div>
 
   <div class="section-title">What to Improve</div>
   <div class="section-desc">Where the gap is — and why closing it grows your account.</div>
@@ -699,6 +737,26 @@ new Chart(document.getElementById('compEngChart'),{
       y1:{position:'right',grid:{display:false},title:{display:true,text:'Posts/wk'}},
       x:{grid:{display:false}}}}
 });
+
+new Chart(document.getElementById('compCaptionChart'),{
+  type:'bar',
+  data:{labels:B.map(a=>'@'+a.handle.replace(' (You)','')),
+    datasets:[{label:'Avg caption length',data:B.map(a=>a.avgCaption),backgroundColor:compColors}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{y:{grid:{color:C.grid}},x:{grid:{display:false}}}}
+});
+new Chart(document.getElementById('compBreakoutChart'),{
+  type:'bar',
+  data:{labels:B.map(a=>'@'+a.handle.replace(' (You)','')),
+    datasets:[{label:'Breakout rate',data:B.map(a=>a.breakoutRate),backgroundColor:compColors}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{y:{grid:{color:C.grid},ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}}}
+});
+
+// deeper competitor insights
+document.getElementById('compDeep').innerHTML = D.compDeep.map((x,i)=>
+  `<div class="insight"><div class="ic" style="background:linear-gradient(135deg,var(--accent),var(--accent2))">${i+1}</div>`+
+  `<div><h4>${x.title}</h4><p>${x.detail}</p></div></div>`).join('');
 
 // gap analysis
 document.getElementById('gapAnalysis').innerHTML = D.gapAnalysis.map((x,i)=>
