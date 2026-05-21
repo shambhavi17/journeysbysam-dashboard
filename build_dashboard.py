@@ -425,6 +425,10 @@ body{transition:background .3s ease}
   color:#7c7065;transition:.15s}
 .topnav-tab:hover{color:#4f463c}
 .topnav-tab.active{background:linear-gradient(135deg,#c0879a,#b3a3d6);color:#fff}
+.topnav-refresh{font-family:'Jost',sans-serif;font-size:12.5px;font-weight:500;cursor:pointer;
+  text-decoration:none;white-space:nowrap;padding:7px 13px;border-radius:10px;
+  border:1px solid #c0879a;color:#a96b80;background:transparent;transition:.15s}
+.topnav-refresh:hover{background:#f4dfe1;color:#4f463c}
 .pane{display:none}
 .pane.active{display:block}
 __PLANNER_CSS__
@@ -437,6 +441,9 @@ __PLANNER_CSS__
     <button class="topnav-tab active" data-pane="analytics">Content Analytics</button>
     <button class="topnav-tab" data-pane="planner">40K Growth Planner</button>
   </div>
+  <a class="topnav-refresh" target="_blank" rel="noopener"
+     href="https://github.com/shambhavi17/journeysbysam-dashboard/actions/workflows/refresh.yml"
+     title="Opens GitHub — tap &quot;Run workflow&quot; to pull fresh Instagram data (~3 min)">&#8635; Refresh data</a>
 </div></nav>
 <div id="pane-analytics" class="pane active">
 <header>
