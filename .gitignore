@@ -1,1 +1,11 @@
+# secret — never commit (lives as a GitHub Actions secret instead)
+.apify_token
+
+# build intermediate — index.html is the published artifact
+content_analytics_dashboard.html
+
+# python / os cruft
+__pycache__/
+*.pyc
+*.log
 .DS_Store
