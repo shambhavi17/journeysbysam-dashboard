@@ -1865,6 +1865,57 @@ TCP = {
             "Set money aside for taxes all year so cash flow doesn't get crushed at filing time.",
         ],
     },
+    # ---- Brand Foundations: the "Grow Like a Pro" branding track ----------
+    "brand": {
+        "roadmap": [
+            "Define your goals — awareness, traffic, leads, or sales?",
+            "Identify your target audience — their demographics, interests and behaviours",
+            "Choose the right platforms — be where your audience actually is",
+            "Create engaging content — high-quality and valuable, consistently",
+            "Analyse & adjust — track your metrics and optimise from the data",
+        ],
+        "swot": {
+            "Strengths": ["Authentic, real travel — AI can't fake standing on a glacier"],
+            "Weaknesses": ["Average reach still well below competitors"],
+            "Opportunities": ["The aesthetic-forward Chicago-local niche is barely claimed"],
+            "Threats": ["A saturated travel niche + frequent algorithm changes"],
+        },
+        "voiceQs": [
+            "When people interact with your brand, how do you want them to feel?",
+            "What 3–5 adjectives describe your brand?",
+            "Whose brand voice do you love — and why does it resonate?",
+            "Whose voice do you NOT want to be like? What will you avoid?",
+            "How do you talk about yourself — what language and tone do you use?",
+        ],
+        "audienceIs": ["Bucket-list traveller", "Plans trips around aesthetics & hidden gems",
+                       "Mid-range, value-conscious budget", "Curious explorer who wants to live like a local"],
+        "audienceIsNot": ["Package-tour vacationer", "Last-minute, no-planning traveller",
+                          "Luxury-only / 5-star-resort-only", "Stays inside the resort the whole trip"],
+        "personaFields": ["Name", "Age", "Gender", "Relationship status", "Job title",
+                          "Location", "Salary / monthly budget", "Family / kids?",
+                          "Who they admire", "Favourite drink", "Music / podcasts",
+                          "Favourite TV / movies / books", "Interests & hobbies", "News / sites they read"],
+        "pillars": ["Hidden gems & underrated spots", "Cinematic destination reels",
+                    "Ready-to-use itineraries", "Chicago local guides", "Drone reveals",
+                    "Honest 'is it worth it' takes"],
+        "contentTypes": ["Entertaining", "Inspiring", "Relatable", "Educational / valuable"],
+        "systems": [
+            "A link page for your bio (Linktree, Beacons, or your own site)",
+            "A business email account — ideally on a business domain",
+            "Affiliate platform memberships (Amazon, LTK, GetYourGuide, etc.)",
+            "Email marketing software (Flodesk, Mailchimp, ConvertKit, etc.)",
+            "Freebies / lead magnets with landing pages to grow your email list",
+            "DM & comment automation (ManyChat, Link DM)",
+            "An 'About Me' story highlight or a pinned post",
+            "A blog or portfolio website",
+        ],
+        "planning": [
+            "Answer The Public — enter a content-pillar keyword to see the top questions people ask.",
+            "Google your pillars → expand the 'People Also Ask' box until you have ~30 questions → drop them all in your content planner.",
+            "Ask ChatGPT for the most commonly asked questions around each pillar.",
+            "Match each idea with a trending audio + a hook from the Hook Vault.",
+        ],
+    },
     # ---- Shoot Kit: photography reference ---------------------------------
     "shoot": {
         "settings": [
@@ -2032,6 +2083,58 @@ HOOKS_100 = [
     "Not many people talk about...",
     "POV: You decide to spend your money on experiences instead of things",
     "Easy [topic] hack to [result] — e.g. easy travel hack to save time at the airport",
+    # ---- Track 2 workbook: 50 more viral hook ideas ----
+    "I can't make this up...",
+    "POV: My [relationship] asked me to do [XYZ] and this is how it went",
+    "I think I just found the best [product] and I need to share it with you",
+    "This is the only [product] I will ever use again",
+    "If you're not doing [activity], you're going to regret it — let me explain...",
+    "OK, I can't be the only one who [activity]",
+    "After visiting [X] states/countries/parks, this is the most/least [descriptor] one",
+    "When people visit [place] but miss [place] only [X] away",
+    "I will never get over the fact that...",
+    "Yes, we have a lot of [thing] — but we also have [thing]",
+    "Don't know how to [activity]? I got you.",
+    "How to [activity that solves an audience problem]",
+    "I can't believe this happened!",
+    "I can't believe what a difference this made!",
+    "This [category] hack will make your life so much easier",
+    "You could be doing [X] more efficiently",
+    "You should be doing this when you're out [activity]",
+    "Don't forget to do this after you [activity]",
+    "Is this the BEST [product type] on the market?",
+    "I had no idea you could do this in [location]",
+    "Here's everything you need to know about [topic]",
+    "Never in a million years did I think I would [activity]",
+    "POV: You had no idea you could [activity] for [price]",
+    "This [thing] has ruined all other [same thing] for me",
+    "Here's a day in the life of [who you are / what you do]",
+    "Today we're talking [topic]",
+    "Don't [activity] — do this instead!",
+    "Just a reminder that [location] will look like this in [time]",
+    "Spend the day doing [XYZ] with me",
+    "You NEED to be doing this [XYZ]",
+    "This is the best [type of place] to visit this [season]",
+    "Add this to your bucket list!",
+    "This is your sign to [activity]",
+    "Don't go to [place] without doing these things first",
+    "Controversial things I'll never [activity] without",
+    "[X] must-see spots in [location]",
+    "What no one tells you about [topic]...",
+    "[X] things to do in [location]",
+    "POV: You [very specific activity]",
+    "The person who sent you this wants to [activity]",
+    'Them: "[quote]"  Me: "[quote]"  Them: \U0001f60f',
+    "Things about [topic] that just make sense",
+    "The main thing I get asked as a [expertise] is [question]",
+    "How much it costs to [activity]",
+    "This is your reminder that [reminder]",
+    "What people think [activity] is like vs. what it's actually like",
+    "PSA: ...",
+    "If you're visiting [country/state], you HAVE to visit [place]",
+    "[X] reasons you should (or shouldn't) [activity]",
+    "This is why you should / shouldn't get the [item/experience]",
+    "Come with me to my [activity]",
 ]
 
 # build the full data object the front-end consumes
@@ -2430,6 +2533,7 @@ PLANNER_BODY = r"""
     <button class="psubtab" data-sec="layovers">&#9992;&#65039; Layovers</button>
     <button class="psubtab" data-sec="library">&#128218; Content Library</button>
     <button class="psubtab" data-sec="hookvault">&#129693; Hook Vault</button>
+    <button class="psubtab" data-sec="brandfoundations">&#127793; Brand Foundations</button>
     <button class="psubtab" data-sec="chicago">&#127956;&#65039; Chicago Playbook</button>
     <button class="psubtab" data-sec="strategy">&#128640; Posting Strategy</button>
     <button class="psubtab" data-sec="branddeals">&#128188; Brand Deals</button>
@@ -2454,6 +2558,7 @@ PLANNER_BODY = r"""
   <div class="psec" id="psec-layovers"></div>
   <div class="psec" id="psec-library"></div>
   <div class="psec" id="psec-hookvault"></div>
+  <div class="psec" id="psec-brandfoundations"></div>
   <div class="psec" id="psec-chicago"></div>
   <div class="psec" id="psec-strategy"></div>
   <div class="psec" id="psec-branddeals"></div>
@@ -3891,10 +3996,16 @@ function renderShootKit(){
 /* ============================================================ HOOK VAULT */
 const K_HOOKS='jbs_hooks_v1';
 function hookData(){
-  const d=LS.get(K_HOOKS,null);
-  if(d&&d.length!=null)return d;
-  const fresh=(PLANNER.hooks100||[]).map(t=>({t:t,fav:false}));
-  LS.set(K_HOOKS,fresh);return fresh;
+  const def=PLANNER.hooks100||[];
+  let d=LS.get(K_HOOKS,null);
+  if(!d||d.length==null){
+    d=def.map(t=>({t:t,fav:false}));LS.set(K_HOOKS,d);return d;
+  }
+  if(d.length<def.length){               // new default hooks shipped — append them
+    for(let i=d.length;i<def.length;i++)d.push({t:def[i],fav:false});
+    LS.set(K_HOOKS,d);
+  }
+  return d;
 }
 function renderHookVault(){
   const data=hookData();
@@ -3943,12 +4054,55 @@ function renderHookVault(){
   draw();
 }
 
+/* ============================================================ BRAND FOUNDATIONS */
+function renderBrandFoundations(){
+  const b=PLANNER.tcp.brand;
+  const swot=Object.keys(b.swot).map(k=>{
+    const cls={Strengths:'pb-sage',Weaknesses:'pb-blush',Opportunities:'pb-lav',Threats:'pb-gold'}[k]||'pb-lav';
+    return `<div class="pcard"><div class="pbadge ${cls}">${esc(k)}</div>
+      <div style="margin-top:7px">${elList('bf.swot.'+k,b.swot[k],{label:'point',multiline:true})}</div></div>`;}).join('');
+  const voice=b.voiceQs.map((q,i)=>`<div class="pfield"><h4>${esc(q)}</h4>
+    ${elField('bf.voice'+i,'',{multiline:true,ph:'Your answer...'})}</div>`).join('');
+  const persona=b.personaFields.map((f,i)=>`<div><label class="pmuted" style="font-size:11px">${esc(f)}</label>
+    ${elField('bf.persona'+i,'',{ph:f})}</div>`).join('');
+  $('#psec-brandfoundations').innerHTML=`
+    <div class="pseched">Brand Foundations</div>
+    <div class="psecdesc">Get your branding rock-solid before chasing growth. These are working worksheets &mdash; fill them in and they save to this browser.</div>
+    <div class="pblock-title">Branding Roadmap</div>
+    <div class="pcard">${elList('bf.roadmap',b.roadmap,{label:'step',multiline:true})}</div>
+    <div class="pblock-title">SWOT Analysis</div>
+    <div class="psecdesc">Where do you stand in the creator economy right now?</div>
+    <div class="pgrid pg2">${swot}</div>
+    <div class="pblock-title">Brand Voice &amp; Tone</div>
+    <div class="pcard">${voice}</div>
+    <div class="pblock-title">Target Audience &mdash; IS / IS NOT</div>
+    <div class="psecdesc">Define who your audience IS and explicitly who they are NOT.</div>
+    <div class="pgrid pg2">
+      <div><div class="pbadge pb-sage" style="margin-bottom:7px">Your audience IS</div>
+        <div class="pcard">${elList('bf.is',b.audienceIs,{label:'trait',multiline:true})}</div></div>
+      <div><div class="pbadge pb-blush" style="margin-bottom:7px">Your audience IS NOT</div>
+        <div class="pcard">${elList('bf.isnot',b.audienceIsNot,{label:'trait',multiline:true})}</div></div>
+    </div>
+    <div class="pblock-title">Audience Persona</div>
+    <div class="psecdesc">Build one specific person &mdash; it makes every content decision easier.</div>
+    <div class="pcard"><div class="pgrid pg3">${persona}</div></div>
+    <div class="pblock-title">Brand &amp; Content Pillars</div>
+    <div class="psecdesc">Your core topics. For each, brainstorm ${b.contentTypes.join(' &middot; ')} angles.</div>
+    <div class="pcard">${elList('bf.pillars',b.pillars,{label:'pillar'})}</div>
+    <div class="pblock-title">Systems to Have Before You Grow</div>
+    <div class="pcard">${elList('bf.systems',b.systems,{label:'system',multiline:true})}</div>
+    <div class="pblock-title">Content Idea Mining</div>
+    <div class="pcard">${elList('bf.planning',b.planning,{label:'tip',multiline:true})}</div>`;
+  wireEditables($('#psec-brandfoundations'));
+}
+
 /* ============================================================ NAV */
 const RENDERERS={thisweek:renderThisWeek,growth:renderGrowth,destinations:renderDestinations,
   board:renderBoard,calendar:renderCalendar,performance:renderPerformance,
   competitors:renderCompetitors,collabs:renderCollabs,
   caption:renderCaption,inbox:renderInbox,drone:renderDrone,layovers:renderLayovers,
-  library:renderLibrary,hookvault:renderHookVault,chicago:renderChicago,strategy:renderStrategy,
+  library:renderLibrary,hookvault:renderHookVault,brandfoundations:renderBrandFoundations,
+  chicago:renderChicago,strategy:renderStrategy,
   branddeals:renderBrandDeals,templates:renderTemplates,rates:renderRates,
   contracts:renderContracts,shootkit:renderShootKit,trends:renderTrends};
 const rendered={};
