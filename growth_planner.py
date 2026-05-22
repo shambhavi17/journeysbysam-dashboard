@@ -2537,8 +2537,8 @@ body.theme-planner{background:#f7f1e9;}
 PLANNER_BODY = r"""
 <div class="phero">
   <div class="peyebrow">Luxury Travel Creator Workspace</div>
-  <h1>40K Growth Content Planner</h1>
-  <p>From 5K to 40,000 followers &mdash; planned destination by destination &#10024;</p>
+  <h1>Growth Content Planner</h1>
+  <p>From 5K to 2M followers &mdash; planned destination by destination &#10024;</p>
 </div>
 <div class="pwrap">
   <div class="psubnav" id="psubnav">

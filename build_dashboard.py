@@ -506,7 +506,7 @@ __PLANNER_CSS__
   <span class="brand">&#10022; journeysbysam Insights</span>
   <div class="topnav-tabs">
     <button class="topnav-tab active" data-pane="analytics">Content Analytics</button>
-    <button class="topnav-tab" data-pane="planner">40K Growth Planner</button>
+    <button class="topnav-tab" data-pane="planner">Growth Content Planner</button>
   </div>
   <a class="topnav-refresh" target="_blank" rel="noopener"
      href="https://github.com/shambhavi17/journeysbysam-dashboard/actions/workflows/refresh.yml"
