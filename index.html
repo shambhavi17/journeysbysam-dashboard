@@ -975,7 +975,9 @@ function wirePellist(box){
   box.querySelectorAll('.pel-in').forEach(inp=>inp.addEventListener('change',()=>{
     elSet(scope,pellistVals(box));}));
   box.querySelectorAll('[data-eldel]').forEach((b,i)=>b.addEventListener('click',()=>{
-    const arr=pellistVals(box);arr.splice(i,1);rebuild(arr);}));
+    const arr=pellistVals(box);
+    if(!confirm('Delete this item?'+(arr[i]?'\n\n“'+arr[i]+'”':'')))return;
+    arr.splice(i,1);rebuild(arr);}));
   const add=box.querySelector('[data-eladd]');
   if(add)add.addEventListener('click',()=>{
     const arr=pellistVals(box);arr.push('');const fresh=rebuild(arr);
@@ -1013,7 +1015,9 @@ function wirePchecklist(box){
     const tx=cb.parentElement.querySelector('.pchk-tx');if(tx)tx.classList.toggle('done',on);
     elSet(scope+'::chk',pchkStates(box));}));
   box.querySelectorAll('[data-eldel]').forEach((b,i)=>b.addEventListener('click',()=>{
-    const arr=pchkVals(box),chk=pchkStates(box);arr.splice(i,1);chk.splice(i,1);rebuild(arr,chk);}));
+    const arr=pchkVals(box),chk=pchkStates(box);
+    if(!confirm('Delete this item?'+(arr[i]?'\n\n“'+arr[i]+'”':'')))return;
+    arr.splice(i,1);chk.splice(i,1);rebuild(arr,chk);}));
   const add=box.querySelector('[data-eladd]');
   if(add)add.addEventListener('click',()=>{
     const arr=pchkVals(box),chk=pchkStates(box);arr.push('');chk.push(false);
@@ -1117,6 +1121,7 @@ function renderGrowth(){
     if(f!=='month')v=v?parseInt(v,10):'';
     recUpd('growthMonth',e.target.dataset.gcmId,f,v);}));
   $('#psec-growth').querySelectorAll('[data-gcmdel]').forEach(b=>b.addEventListener('click',()=>{
+    if(!confirm('Delete this month row?'))return;
     recDel('growthMonth',+b.dataset.gcmdel);renderGrowth();}));
   wireEditables($('#psec-growth'));
   $('#psec-growth').querySelectorAll('[data-gmet]').forEach(inp=>inp.addEventListener('change',e=>{
