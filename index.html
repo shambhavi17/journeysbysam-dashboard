@@ -946,8 +946,7 @@ function elDel(scope){const s=_ed();delete s[scope];delete s[scope+'::chk'];LS.s
 function efGet(scope,def){const s=_ed();return s[scope]!=null?s[scope]:(def==null?'':def);}
 function efSet(scope,v){const s=_ed();s[scope]=v;LS.set(K_EDIT,s);}
 function elRstBtn(scope){
-  return _ed()[scope]!=null
-    ?`<button class="pelrst" data-elrst title="Reset this list to its original items">&#8635; Restore original</button>`:'';
+  return `<button class="pelrst" data-elrst title="Reset this list to its original items">&#8635; Restore original</button>`;
 }
 function elList(scope,items,opts){
   opts=opts||{};const ml=opts.multiline?1:0;
