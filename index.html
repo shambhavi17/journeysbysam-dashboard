@@ -107,6 +107,41 @@ body{transition:background .3s ease}
 .topnav-refresh:hover{background:#f4dfe1;color:#4f463c}
 .pane{display:none}
 .pane.active{display:block}
+#topnav-sync{margin-left:8px;display:inline-flex;align-items:center;gap:6px}
+#topnav-sync .syncdot{font-size:10px;line-height:1;color:#bbb;transition:.2s}
+#topnav-sync.sync-ok .syncdot{color:#5cae7e}
+#topnav-sync.sync-err .syncdot{color:#d9776a}
+#topnav-sync.sync-busy .syncdot{color:#e0b54a}
+.jbs-modal-bg{position:fixed;inset:0;background:rgba(40,32,28,.5);z-index:9999;
+  display:none;align-items:center;justify-content:center;padding:20px}
+.jbs-modal{background:#fff;border-radius:16px;max-width:450px;width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,.32);font-family:'Jost',sans-serif;
+  max-height:90vh;overflow:auto}
+.jbs-modal-h{display:flex;justify-content:space-between;align-items:center;
+  padding:15px 20px;border-bottom:1px solid #eee;font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:21px;font-weight:600;color:#4f463c}
+.jbs-modal-x{background:none;border:none;font-size:25px;cursor:pointer;color:#aaa;line-height:1}
+.jbs-modal-b{padding:18px 20px}
+.jbs-sync-intro{font-size:13px;color:#6b6258;line-height:1.55;margin:0 0 13px}
+.sync-status{font-size:13px;padding:9px 12px;border-radius:8px;background:#f2efe9;
+  color:#6b6258;margin-bottom:14px}
+.sync-status.ok{background:#e7f3ec;color:#3d7d56}
+.sync-status.err{background:#fbe9e6;color:#b5503f}
+.jbs-sync-label{display:block;font-size:12px;font-weight:600;color:#4f463c;margin-bottom:5px}
+.jbs-sync-hint{font-weight:400;color:#999}
+.jbs-sync-input{width:100%;box-sizing:border-box;padding:9px 11px;border:1px solid #ddd;
+  border-radius:8px;font-size:13px;font-family:inherit;margin-bottom:12px}
+.jbs-sync-actions{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.jbs-sync-btn{padding:8px 13px;border:1px solid #ddd;background:#f7f4ef;border-radius:8px;
+  font-size:12.5px;font-family:inherit;cursor:pointer;color:#4f463c}
+.jbs-sync-btn.primary{background:linear-gradient(135deg,#c0879a,#b3a3d6);color:#fff;border:none}
+.jbs-sync-btn.danger{color:#b5503f}
+.jbs-sync-gist{font-size:12px;color:#6b6258;line-height:1.55;margin-bottom:10px}
+.jbs-sync-gist a{color:#b3789a}
+.jbs-sync-help{font-size:12.5px;color:#6b6258;border-top:1px solid #eee;padding-top:11px}
+.jbs-sync-help summary{cursor:pointer;font-weight:600;color:#4f463c}
+.jbs-sync-help ol{margin:9px 0 0;padding-left:20px;line-height:1.75}
+.jbs-sync-help a{color:#b3789a}
 
 /* ===== 40K Growth Planner — pastel luxury theme (scoped to #pane-planner) ===== */
 #pane-planner{
@@ -465,7 +500,43 @@ body.theme-planner{background:#f7f1e9;}
   <a class="topnav-refresh" target="_blank" rel="noopener"
      href="https://github.com/shambhavi17/journeysbysam-dashboard/actions/workflows/refresh.yml"
      title="Opens GitHub — tap &quot;Run workflow&quot; to pull fresh Instagram data (~3 min)">&#8635; Refresh data</a>
+  <button class="topnav-refresh sync-off" id="topnav-sync" onclick="jbsSyncOpen()"
+     title="Sync your edits across all your devices">&#9729; <span class="syncdot">&#9679;</span> Sync</button>
 </div></nav>
+<div id="jbs-sync-modal" class="jbs-modal-bg">
+  <div class="jbs-modal">
+    <div class="jbs-modal-h"><span>&#9729; Device Sync</span>
+      <button class="jbs-modal-x" onclick="jbsSyncClose()">&times;</button></div>
+    <div class="jbs-modal-b">
+      <p class="jbs-sync-intro">Keep your dashboard edits &mdash; calendar, performance log,
+        ideas, hooks, everything &mdash; in sync across your laptop and iPad. Your data is stored
+        in a <b>private GitHub Gist</b> that only you can see. Completely free.</p>
+      <div id="syncStatus" class="sync-status">Not connected</div>
+      <label class="jbs-sync-label">GitHub token
+        <span class="jbs-sync-hint">(classic token, <b>gist</b> scope only)</span></label>
+      <input type="password" id="syncToken" class="jbs-sync-input" placeholder="ghp_..." autocomplete="off">
+      <div class="jbs-sync-actions">
+        <button class="jbs-sync-btn primary" onclick="jbsSyncConnect()">Connect</button>
+        <button class="jbs-sync-btn" onclick="jbsSyncPush()">Save now &#8593;</button>
+        <button class="jbs-sync-btn" onclick="jbsSyncPull()">Pull latest &#8595;</button>
+        <button class="jbs-sync-btn danger" onclick="jbsSyncDisconnect()">Disconnect</button>
+      </div>
+      <div id="syncGist" class="jbs-sync-gist"></div>
+      <details class="jbs-sync-help">
+        <summary>How do I get a token? (1-minute, one-time setup)</summary>
+        <ol>
+          <li>Open <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener">github.com/settings/tokens/new</a> (log in if asked)</li>
+          <li>Note: type <b>journeysbysam dashboard sync</b></li>
+          <li>Expiration: choose <b>No expiration</b> (or 1 year)</li>
+          <li>Scopes: tick <b>only</b> the <b>gist</b> box &mdash; leave everything else off</li>
+          <li>Click <b>Generate token</b>, copy it, paste it above, hit <b>Connect</b></li>
+          <li>On your iPad: open this dashboard, tap Sync, paste the <b>same token</b>, Connect &mdash; it finds your data automatically</li>
+        </ol>
+        <p style="margin:9px 0 0">This token can only touch gists &mdash; not your repos or account. You can delete it anytime in GitHub settings.</p>
+      </details>
+    </div>
+  </div>
+</div>
 <div id="pane-analytics" class="pane active">
 <header>
   <div class="wrap">
@@ -2391,6 +2462,108 @@ document.querySelectorAll('#psubnav .psubtab').forEach(t=>
 window.__initPlanner=function(){if(!window.__plannerInit){window.__plannerInit=true;renderThisWeek();rendered.thisweek=true;}};
 })();
 
+</script>
+<script>
+/* ===== Device Sync via private GitHub Gist ===== */
+(function(){
+  var SYNC_CFG='jbs_sync_cfg', GIST_FILE='jbs_dashboard.json',
+      GIST_DESC='journeysbysam Insights - dashboard sync', lastSnap=null;
+  function cfg(){try{return JSON.parse(localStorage.getItem(SYNC_CFG)||'{}');}catch(e){return {};}}
+  function setCfg(c){localStorage.setItem(SYNC_CFG,JSON.stringify(c));}
+  function snapshot(){var o={};for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);
+    if(k&&k.indexOf('jbs_')===0&&k!==SYNC_CFG)o[k]=localStorage.getItem(k);}return o;}
+  function snapStr(){return JSON.stringify(snapshot());}
+  function applyData(d){Object.keys(d||{}).forEach(function(k){
+    if(k.indexOf('jbs_')===0&&k!==SYNC_CFG){try{localStorage.setItem(k,d[k]);}catch(e){}}});}
+  function hdr(c){return {'Authorization':'Bearer '+c.token,'Accept':'application/vnd.github+json'};}
+  function badge(s){var b=document.getElementById('topnav-sync');
+    if(b)b.className='topnav-refresh sync-'+s;}
+  function stat(msg,cls){var e=document.getElementById('syncStatus');
+    if(e){e.textContent=msg;e.className='sync-status '+(cls||'');}}
+  function showGist(){var c=cfg(),e=document.getElementById('syncGist');if(!e)return;
+    e.innerHTML=c.gistId?('Connected. Your data lives in a <a href="https://gist.github.com/'+c.gistId+
+      '" target="_blank" rel="noopener">private gist</a>. Use the same token on your other devices.'):'';}
+  function push(){
+    var c=cfg();if(!c.token)return Promise.resolve(false);
+    badge('busy');stat('Saving...','');
+    var body={files:{}};
+    body.files[GIST_FILE]={content:JSON.stringify({updatedAt:new Date().toISOString(),data:snapshot()})};
+    var url='https://api.github.com/gists',method='POST';
+    if(c.gistId){url+='/'+c.gistId;method='PATCH';}else{body.description=GIST_DESC;body.public=false;}
+    return fetch(url,{method:method,headers:hdr(c),body:JSON.stringify(body)})
+      .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+      .then(function(j){if(!c.gistId){c.gistId=j.id;setCfg(c);showGist();}
+        lastSnap=snapStr();badge('ok');stat('Saved to cloud ✓','ok');return true;})
+      .catch(function(e){badge('err');stat('Save failed: '+e.message,'err');return false;});
+  }
+  function fetchGist(c){
+    return fetch('https://api.github.com/gists/'+c.gistId,{headers:hdr(c)})
+      .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+      .then(function(j){var f=j.files&&j.files[GIST_FILE];if(!f)return null;
+        if(f.truncated&&f.raw_url)return fetch(f.raw_url).then(function(r){return r.text();});
+        return f.content;});
+  }
+  function pull(reload){
+    var c=cfg();if(!c.token||!c.gistId)return Promise.resolve(false);
+    badge('busy');stat('Loading...','');
+    return fetchGist(c).then(function(content){
+      if(!content){badge('ok');stat('Nothing stored yet — click Save now','');return false;}
+      applyData((JSON.parse(content)||{}).data||{});
+      lastSnap=snapStr();badge('ok');stat('Loaded from cloud ✓','ok');
+      if(reload)setTimeout(function(){location.reload();},450);
+      return true;
+    }).catch(function(e){badge('err');stat('Load failed: '+e.message,'err');return false;});
+  }
+  window.jbsSyncOpen=function(){document.getElementById('jbs-sync-modal').style.display='flex';
+    var c=cfg();if(c.token)document.getElementById('syncToken').value=c.token;showGist();
+    if(!c.token)stat('Not connected','');
+    else if(c.gistId)stat('Connected — syncing on','ok');
+    else stat('Token saved — click Connect to finish','');};
+  window.jbsSyncClose=function(){document.getElementById('jbs-sync-modal').style.display='none';};
+  window.jbsSyncConnect=function(){
+    var t=document.getElementById('syncToken').value.trim();
+    if(!t){stat('Paste your token first','err');return;}
+    var c={token:t};setCfg(c);badge('busy');stat('Connecting...','');
+    fetch('https://api.github.com/gists',{headers:hdr(c)})
+      .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' — check the token & gist scope');return r.json();})
+      .then(function(list){
+        var found=(list||[]).filter(function(g){return g.description===GIST_DESC&&g.files&&g.files[GIST_FILE];})[0];
+        if(found){c.gistId=found.id;setCfg(c);showGist();
+          stat('Found your data — loading...','ok');pull(true);}
+        else{stat('New setup — creating your cloud storage...','');
+          push().then(function(ok){if(ok)stat('Connected & saved ✓','ok');});}
+      })
+      .catch(function(e){badge('err');stat('Connect failed: '+e.message,'err');});
+  };
+  window.jbsSyncPush=function(){push();};
+  window.jbsSyncPull=function(){pull(true);};
+  window.jbsSyncDisconnect=function(){
+    if(!confirm('Disconnect sync on this device? Your edits stay here but stop syncing.'))return;
+    localStorage.removeItem(SYNC_CFG);badge('off');stat('Disconnected','');
+    document.getElementById('syncToken').value='';showGist();};
+  function initSync(){
+    lastSnap=snapStr();
+    var c=cfg();
+    if(!c.token){badge('off');return;}
+    badge('ok');
+    if(c.gistId&&!sessionStorage.getItem('jbs_sync_done')){
+      sessionStorage.setItem('jbs_sync_done','1');
+      var pre=snapStr();
+      fetchGist(c).then(function(content){
+        if(!content){badge('ok');return;}
+        applyData((JSON.parse(content)||{}).data||{});
+        var now=snapStr();lastSnap=now;
+        if(now!==pre)location.reload();else badge('ok');
+      }).catch(function(){badge('err');});
+    }
+    setInterval(function(){var cc=cfg();if(!cc.token)return;
+      var now=snapStr();if(lastSnap!==null&&now!==lastSnap)push();},30000);
+    document.addEventListener('visibilitychange',function(){
+      if(document.hidden){var cc=cfg();if(cc.token&&snapStr()!==lastSnap)push();}});
+  }
+  if(document.readyState!=='loading')initSync();
+  else document.addEventListener('DOMContentLoaded',initSync);
+})();
 </script>
 <script>
 (function(){
