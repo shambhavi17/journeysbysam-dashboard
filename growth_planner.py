@@ -2550,7 +2550,7 @@ PLANNER_BODY = r"""
     <button class="psubtab" data-sec="performance">&#128201; Performance Log</button>
     <button class="psubtab" data-sec="competitors">&#129399; Competitors</button>
     <button class="psubtab" data-sec="collabs">&#129309; Collabs</button>
-    <button class="psubtab" data-sec="caption">&#9997;&#65039; Caption Builder</button>
+    <button class="psubtab" data-sec="caption">&#129302; AI Assistant</button>
     <button class="psubtab" data-sec="drone">&#128679; Drone Planner</button>
     <button class="psubtab" data-sec="layovers">&#9992;&#65039; Layovers</button>
     <button class="psubtab" data-sec="hookvault">&#129693; Hook Vault</button>
@@ -3697,7 +3697,7 @@ function renderCaption(){
     'Share this with your travel buddy','Follow for the rest of the series',
     'Which would you visit first? Tell me below'];
   $('#psec-caption').innerHTML=`
-    <div class="pseched">Caption + Hashtag Builder</div>
+    <div class="pseched">AI Assistant</div>
     <div class="psecdesc">Two ways to write a caption &mdash; let Claude AI draft one in your voice, or build one fast from the template picker. Both drop into the editor below.</div>
     <div class="pblock-title">&#129302; AI Caption Writer</div>
     <div class="psecdesc">Describe your post and Claude writes a caption in your @journeysbysam voice. One-time: add your Anthropic API key under &#9881; AI settings.</div>
