@@ -467,6 +467,29 @@ body.theme-planner{background:#f7f1e9;}
 #pane-planner .pcheckedit input{flex:1;font-family:var(--p-sans);font-size:13px;color:var(--p-ink);
   background:var(--p-bg);border:1px solid var(--p-line);border-radius:9px;padding:7px 11px;}
 #pane-planner .pcheckedit input:focus{outline:2px solid var(--p-lav);}
+#pane-planner .pcheckedit.ml{align-items:flex-start;}
+#pane-planner .pcheckedit.ml .pcheck-box{margin-top:3px;}
+#pane-planner .pcheckedit textarea.pel-in{flex:1;font-family:var(--p-sans);font-size:13px;
+  color:var(--p-ink);line-height:1.45;background:var(--p-bg);border:1px solid var(--p-line);
+  border-radius:9px;padding:7px 11px;resize:vertical;}
+#pane-planner .pcheckedit textarea.pel-in:focus{outline:2px solid var(--p-lav);}
+#pane-planner .pcheck-box:hover{border-color:var(--p-accent);}
+#pane-planner .pchk-tx.done{text-decoration:line-through;opacity:.5;}
+#pane-planner .pchecklist{margin-top:4px;}
+/* content hub mini-nav */
+#pane-planner .phubnav{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 20px;}
+#pane-planner .phubtab{font-family:var(--p-sans);font-size:13px;font-weight:500;cursor:pointer;
+  padding:9px 18px;border-radius:30px;border:1px solid var(--p-line);background:var(--p-card);
+  color:var(--p-ink-soft);box-shadow:var(--p-shadow-sm);transition:.16s;}
+#pane-planner .phubtab:hover{color:var(--p-ink);transform:translateY(-1px);}
+#pane-planner .phubtab.active{background:linear-gradient(135deg,var(--p-accent),var(--p-lav-d));
+  color:#fff;border-color:transparent;}
+#pane-planner .phubsec{display:none;}
+#pane-planner .phubsec.active{display:block;}
+/* AI caption writer */
+#pane-planner .pai-card{border:1px solid var(--p-lav-d);
+  background:linear-gradient(135deg,rgba(231,225,243,.5),rgba(244,223,225,.35));}
+#pane-planner .pai-status{font-size:12.5px;color:var(--p-accent-d);font-weight:500;}
 #pane-planner .preccard{border:1px dashed var(--p-accent);background:rgba(244,223,225,.25);}
 #pane-planner .precdel{margin-left:auto;cursor:pointer;color:var(--p-accent-d);
   font-size:12px;font-weight:600;border:1px solid var(--p-accent);background:var(--p-card);
@@ -625,16 +648,14 @@ body.theme-planner{background:#f7f1e9;}
     <button class="psubtab active" data-sec="thisweek">&#128198; This Week</button>
     <button class="psubtab" data-sec="growth">&#128200; Growth Tracker</button>
     <button class="psubtab" data-sec="destinations">&#128506;&#65039; Destinations</button>
-    <button class="psubtab" data-sec="board">&#127916; Content Board</button>
+    <button class="psubtab" data-sec="board">&#127916; Content Hub</button>
     <button class="psubtab" data-sec="calendar">&#128197; Content Calendar</button>
     <button class="psubtab" data-sec="performance">&#128201; Performance Log</button>
     <button class="psubtab" data-sec="competitors">&#129399; Competitors</button>
     <button class="psubtab" data-sec="collabs">&#129309; Collabs</button>
     <button class="psubtab" data-sec="caption">&#9997;&#65039; Caption Builder</button>
-    <button class="psubtab" data-sec="inbox">&#128161; Idea Inbox</button>
     <button class="psubtab" data-sec="drone">&#128679; Drone Planner</button>
     <button class="psubtab" data-sec="layovers">&#9992;&#65039; Layovers</button>
-    <button class="psubtab" data-sec="library">&#128218; Content Library</button>
     <button class="psubtab" data-sec="hookvault">&#129693; Hook Vault</button>
     <button class="psubtab" data-sec="brandfoundations">&#127793; Brand Foundations</button>
     <button class="psubtab" data-sec="chicago">&#127956;&#65039; Chicago Playbook</button>
@@ -656,10 +677,8 @@ body.theme-planner{background:#f7f1e9;}
   <div class="psec" id="psec-competitors"></div>
   <div class="psec" id="psec-collabs"></div>
   <div class="psec" id="psec-caption"></div>
-  <div class="psec" id="psec-inbox"></div>
   <div class="psec" id="psec-drone"></div>
   <div class="psec" id="psec-layovers"></div>
-  <div class="psec" id="psec-library"></div>
   <div class="psec" id="psec-hookvault"></div>
   <div class="psec" id="psec-brandfoundations"></div>
   <div class="psec" id="psec-chicago"></div>
@@ -960,9 +979,49 @@ function wirePellist(box){
     const arr=pellistVals(box);arr.push('');const fresh=rebuild(arr);
     const ins=fresh.querySelectorAll('.pel-in');if(ins.length)ins[ins.length-1].focus();});
 }
+/* elCheck — editable checklist: each row has a clickable checkbox + editable text.
+   Text saved to scope (like elList); checked state to scope+'::chk' (parallel bool array). */
+function elCheck(scope,items,opts){
+  opts=opts||{};const ml=opts.multiline?1:0;
+  const data=elGet(scope,items);
+  const chk=elGet(scope+'::chk',[]);
+  const rows=data.map((v,i)=>`<div class="pcheckedit${ml?' ml':''}">`+
+    `<span class="pcheck-box${chk[i]?' on':''}" data-chktog title="Mark done">${chk[i]?'✓':''}</span>`+
+    (ml?`<textarea class="pel-in pchk-tx${chk[i]?' done':''}" data-el="${esc(scope)}" data-i="${i}" rows="2">${esc(v)}</textarea>`
+       :`<input class="pel-in pchk-tx${chk[i]?' done':''}" data-el="${esc(scope)}" data-i="${i}" value="${esc(v)}">`)+
+    `<button class="pxbtn" data-eldel title="Delete">&times;</button></div>`).join('');
+  return `<div class="pchecklist" data-elscope="${esc(scope)}" data-elml="${ml}" data-ellabel="${esc(opts.label||'item')}">`+
+    (rows||'<div class="pmuted" style="font-size:12px">Empty &mdash; add one below.</div>')+
+    `<button class="paddbtn" data-eladd>+ Add ${esc(opts.label||'item')}</button></div>`;
+}
+function pchkVals(box){return [].map.call(box.querySelectorAll('.pel-in'),x=>x.value);}
+function pchkStates(box){return [].map.call(box.querySelectorAll('.pcheck-box'),x=>x.classList.contains('on'));}
+function wirePchecklist(box){
+  const scope=box.dataset.elscope;
+  function rebuild(arr,chk){
+    elSet(scope,arr);elSet(scope+'::chk',chk);
+    const t=document.createElement('div');
+    t.innerHTML=elCheck(scope,arr,{multiline:box.dataset.elml==='1',label:box.dataset.ellabel});
+    const fresh=t.firstElementChild;box.replaceWith(fresh);wirePchecklist(fresh);return fresh;}
+  box.querySelectorAll('.pel-in').forEach(inp=>inp.addEventListener('change',()=>{
+    elSet(scope,pchkVals(box));}));
+  box.querySelectorAll('[data-chktog]').forEach(cb=>cb.addEventListener('click',()=>{
+    const on=!cb.classList.contains('on');
+    cb.classList.toggle('on',on);cb.textContent=on?'✓':'';
+    const tx=cb.parentElement.querySelector('.pchk-tx');if(tx)tx.classList.toggle('done',on);
+    elSet(scope+'::chk',pchkStates(box));}));
+  box.querySelectorAll('[data-eldel]').forEach((b,i)=>b.addEventListener('click',()=>{
+    const arr=pchkVals(box),chk=pchkStates(box);arr.splice(i,1);chk.splice(i,1);rebuild(arr,chk);}));
+  const add=box.querySelector('[data-eladd]');
+  if(add)add.addEventListener('click',()=>{
+    const arr=pchkVals(box),chk=pchkStates(box);arr.push('');chk.push(false);
+    const fresh=rebuild(arr,chk);const ins=fresh.querySelectorAll('.pel-in');
+    if(ins.length)ins[ins.length-1].focus();});
+}
 function wireEditables(root){
   if(!root)return;
   root.querySelectorAll('.pellist').forEach(wirePellist);
+  root.querySelectorAll('.pchecklist').forEach(wirePchecklist);
   root.querySelectorAll('[data-elf]').forEach(f=>f.addEventListener('change',()=>efSet(f.dataset.elf,f.value)));
 }
 /* custom records (user-added cards) */
@@ -1250,12 +1309,30 @@ function exportData(fmt){
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();
   URL.revokeObjectURL(a.href);
 }
-function renderBoard(){
+function renderHub(){
+  $('#psec-board').innerHTML=`
+    <div class="pseched">Content Hub</div>
+    <div class="psecdesc">Your whole content workflow in one place &mdash; the ideas board, your quick-capture inbox, and your reusable format library.</div>
+    <div class="phubnav">
+      <button class="phubtab active" data-hub="board">&#127916; Ideas Board</button>
+      <button class="phubtab" data-hub="inbox">&#128161; Idea Inbox</button>
+      <button class="phubtab" data-hub="library">&#128218; Format Library</button>
+    </div>
+    <div class="phubsec active" id="hub-board"></div>
+    <div class="phubsec" id="hub-inbox"></div>
+    <div class="phubsec" id="hub-library"></div>`;
+  $('#psec-board').querySelectorAll('.phubtab').forEach(t=>t.addEventListener('click',()=>{
+    const h=t.dataset.hub;
+    $('#psec-board').querySelectorAll('.phubtab').forEach(x=>x.classList.toggle('active',x===t));
+    ['board','inbox','library'].forEach(k=>$('#hub-'+k).classList.toggle('active',k===h));
+  }));
+  renderBoardInner();renderInbox();renderLibrary();
+}
+function renderBoardInner(){
   const destOpts=PLANNER.destinations.map(d=>`<option value="${d.id}">${esc(d.name)}</option>`).join('');
   const trips=PLANNER.destinations.filter(d=>d.kind==='daytrip');
-  $('#psec-board').innerHTML=`
-    <div class="pseched">Content Board</div>
-    <div class="psecdesc">Every content idea across all destinations. Filter, search, favourite, and mark each one Filmed &rarr; Edited &rarr; Posted. Progress saves to this browser.</div>
+  $('#hub-board').innerHTML=`
+    <div class="psecdesc">Every content idea across all destinations. Filter, search, favourite, and mark each one Filmed &rarr; Edited &rarr; Posted.</div>
     <button class="paddrec" id="pf-addidea" style="margin-bottom:14px">+ Add a custom content idea</button>
     <div class="pfilters">
       <select id="pf-dest"><option value="all">All destinations</option>${destOpts}</select>
@@ -1445,7 +1522,7 @@ function renderLibrary(){
     <div class="plib-field"><b>Best Use Case</b>${elField(sc('useCase'),f.useCase,{multiline:true})}</div>
     <div class="plib-field"><b>Example</b>${elField(sc('example'),f.example,{multiline:true})}</div>
   </div>`;}).join('');
-  $('#psec-library').innerHTML=`
+  $('#hub-library').innerHTML=`
     <div class="pseched">Best-Performing Content Library</div>
     <div class="psecdesc">${lib.length} reusable travel formats &mdash; every field is editable, and you can add your own formats.</div>
     <button class="paddrec" id="lib-add" style="margin-bottom:14px">+ Add a content format</button>
@@ -1453,9 +1530,9 @@ function renderLibrary(){
   $('#lib-add').addEventListener('click',()=>{
     recAdd('lib',{_id:'lf'+Date.now(),emoji:'📌',name:'New format',structure:'',hook:'',
       shotList:[],captionFormula:'',cta:'',useCase:'',example:''});renderLibrary();});
-  $('#psec-library').querySelectorAll('[data-libdel]').forEach(b=>b.addEventListener('click',()=>{
+  $('#hub-library').querySelectorAll('[data-libdel]').forEach(b=>b.addEventListener('click',()=>{
     recDel('lib',+b.dataset.libdel);renderLibrary();}));
-  wireEditables($('#psec-library'));
+  wireEditables($('#hub-library'));
 }
 
 /* ============================================================ STRATEGY */
@@ -1942,7 +2019,26 @@ function renderCaption(){
     'Which would you visit first? Tell me below'];
   $('#psec-caption').innerHTML=`
     <div class="pseched">Caption + Hashtag Builder</div>
-    <div class="psecdesc">Pick a destination, hook, hashtag set and CTA &mdash; get a ready-to-edit caption with the right 5 hashtags built in.</div>
+    <div class="psecdesc">Two ways to write a caption &mdash; let Claude AI draft one in your voice, or build one fast from the template picker. Both drop into the editor below.</div>
+    <div class="pblock-title">&#129302; AI Caption Writer</div>
+    <div class="psecdesc">Describe your post and Claude writes a caption in your @journeysbysam voice. One-time: add your Anthropic API key under &#9881; AI settings.</div>
+    <div class="pcard pai-card">
+      <textarea class="pnote-ed" id="ai-brief" rows="3" placeholder="Describe your post — where you were, what happened, the vibe, a detail to include..."></textarea>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <button class="pbtn pbtn-accent" id="ai-gen">&#10024; Write with Claude</button>
+        <button class="pbtn" id="ai-settings">&#9881;&#65039; AI settings</button>
+        <span class="pai-status" id="ai-status"></span>
+      </div>
+      <div id="ai-cfg" style="display:none;margin-top:12px">
+        <label class="pmuted" style="font-size:12px">Anthropic API key &mdash; stored only on this device, never synced</label>
+        <input type="password" class="pinput" id="ai-key" placeholder="sk-ant-..." autocomplete="off">
+        <label class="pmuted" style="font-size:12px;margin-top:8px;display:block">Model</label>
+        <input type="text" class="pinput" id="ai-model" placeholder="claude-3-5-haiku-latest">
+        <button class="pbtn pbtn-accent" id="ai-save" style="margin-top:10px">Save settings</button>
+        <div class="psecdesc" style="margin-top:8px">Get a key at <b>console.anthropic.com &rarr; API Keys</b>. Needs a small prepaid balance (about 1&cent; per caption). If a model name errors, try <b>claude-3-5-haiku-latest</b> (cheapest) or <b>claude-3-5-sonnet-latest</b> (best).</div>
+      </div>
+    </div>
+    <div class="pblock-title">&#9889; Quick Template Builder</div>
     <div class="pcard">
       <div class="pgrid pg2">
         <div><label class="pmuted" style="font-size:12px">Destination</label>
@@ -1973,6 +2069,58 @@ function renderCaption(){
   }
   fillHooks();
   $('#cap-dest').addEventListener('change',fillHooks);
+  /* ----- AI Caption Writer (Claude API) ----- */
+  const AI_CFG='jbs_ai_cfg';
+  function aiCfg(){try{return JSON.parse(localStorage.getItem(AI_CFG)||'{}');}catch(e){return {};}}
+  $('#ai-settings').addEventListener('click',()=>{
+    const box=$('#ai-cfg');const open=box.style.display==='none';
+    box.style.display=open?'block':'none';
+    if(open){const c=aiCfg();$('#ai-key').value=c.key||'';
+      $('#ai-model').value=c.model||'claude-3-5-haiku-latest';}
+  });
+  $('#ai-save').addEventListener('click',()=>{
+    localStorage.setItem(AI_CFG,JSON.stringify({key:$('#ai-key').value.trim(),
+      model:$('#ai-model').value.trim()||'claude-3-5-haiku-latest'}));
+    $('#ai-cfg').style.display='none';
+    const s=$('#ai-status');s.textContent='✓ settings saved';setTimeout(()=>s.textContent='',2000);
+  });
+  $('#ai-gen').addEventListener('click',()=>{
+    const c=aiCfg();
+    if(!c.key){$('#ai-status').textContent='⚠ add your API key in ⚙ AI settings first';
+      $('#ai-cfg').style.display='block';
+      const cc=aiCfg();$('#ai-key').value=cc.key||'';
+      $('#ai-model').value=cc.model||'claude-3-5-haiku-latest';return;}
+    const d=dests.find(x=>x.id===$('#cap-dest').value)||dests[0];
+    const hook=$('#cap-hook').value, cta=$('#cap-cta').value, brief=$('#ai-brief').value.trim();
+    const prompt='You are writing an Instagram caption for @journeysbysam — a travel and Chicago '+
+      'lifestyle creator with a warm, aspirational, personable, slightly poetic voice, growing toward '+
+      '40K followers. Write ONE caption for a post about: '+d.name+'.\n'+
+      (hook&&hook.charAt(0)!=='('?('Open with or naturally adapt this hook: "'+hook+'".\n'):'')+
+      (brief?('The creator’s notes about this specific post: '+brief+'\n'):'')+
+      'Weave in this call to action naturally near the end: "'+cta+'".\n\n'+
+      'Format: a scroll-stopping first line, then 3-5 short lines including one vivid sensory '+
+      'detail and one emotional or relatable line, then the CTA, then 6-8 relevant hashtags on the '+
+      'final line. Keep it authentic, warm, and not salesy. Output ONLY the caption text — no '+
+      'preamble, no options, no quotation marks around it.';
+    const btn=$('#ai-gen');btn.disabled=true;const ot=btn.innerHTML;btn.innerHTML='✍ Writing...';
+    $('#ai-status').textContent='';
+    fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'content-type':'application/json','x-api-key':c.key,
+        'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:c.model||'claude-3-5-haiku-latest',max_tokens:700,
+        messages:[{role:'user',content:prompt}]})
+    }).then(r=>r.json().then(j=>({ok:r.ok,j:j})))
+    .then(res=>{
+      if(!res.ok)throw new Error((res.j&&res.j.error&&res.j.error.message)||'request failed');
+      const txt=(res.j.content||[]).map(b=>b.text||'').join('').trim();
+      if(!txt)throw new Error('empty response');
+      $('#cap-out').value=txt;
+      $('#ai-status').textContent='✓ caption ready — edit it below';
+      $('#cap-out').scrollIntoView({block:'center',behavior:'smooth'});
+    }).catch(e=>{$('#ai-status').textContent='⚠ '+e.message;})
+    .then(()=>{btn.disabled=false;btn.innerHTML=ot;});
+  });
   $('#cap-gen').addEventListener('click',()=>{
     const d=dests.find(x=>x.id===$('#cap-dest').value)||dests[0];
     const hook=$('#cap-hook').value;
@@ -2018,7 +2166,7 @@ function renderCaption(){
 const K_INBOX='jbs_inbox_v1';
 function renderInbox(){
   const items=LS.get(K_INBOX,[]);
-  $('#psec-inbox').innerHTML=`
+  $('#hub-inbox').innerHTML=`
     <div class="pseched">Idea Inbox</div>
     <div class="psecdesc">Quick-capture any content idea the moment it strikes. Everything saves to this browser &mdash; clear ideas as you move them into your calendar. (Cmd/Ctrl + Enter to add.)</div>
     <div class="pcard">
@@ -2034,7 +2182,7 @@ function renderInbox(){
     const l=LS.get(K_INBOX,[]);l.unshift(v);LS.set(K_INBOX,l);renderInbox();}
   $('#inbox-add').addEventListener('click',add);
   $('#inbox-in').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.metaKey||e.ctrlKey))add();});
-  $('#psec-inbox').querySelectorAll('[data-inbdel]').forEach(b=>b.addEventListener('click',()=>{
+  $('#hub-inbox').querySelectorAll('[data-inbdel]').forEach(b=>b.addEventListener('click',()=>{
     const l=LS.get(K_INBOX,[]);l.splice(+b.dataset.inbdel,1);LS.set(K_INBOX,l);renderInbox();}));
 }
 
@@ -2277,11 +2425,12 @@ function renderContracts(){
   const c=PLANNER.tcp.contracts;
   const checklist=c.checklist.map((cat,i)=>`<div class="pcard">
     <div class="pbadge pb-lav">${esc(cat.cat)}</div>
-    <div style="margin-top:7px">${elList('ct.cl'+i,cat.items,{label:'item',multiline:true})}</div></div>`).join('');
+    <div style="margin-top:7px">${elCheck('ct.cl'+i,cat.items,{label:'item',multiline:true})}</div></div>`).join('');
   $('#psec-contracts').innerHTML=`
     <div class="pseched">Contracts &amp; Money</div>
     <div class="psecdesc">Read every contract before you sign. Every checklist below is editable &mdash; add your own items.</div>
     <div class="pblock-title">Contract Review Checklist</div>
+    <div class="psecdesc">Tap the box to tick off each item as you verify it in a contract.</div>
     <div class="pgrid pg2">${checklist}</div>
     <div class="pgrid pg2" style="margin-top:18px">
       <div><div class="pblock-title" style="margin-top:6px">&#128681; Red Flags</div>
@@ -2292,7 +2441,7 @@ function renderContracts(){
     <div class="pblock-title">FTC Disclosure</div>
     <div class="pcard">${elList('ct.ftc',c.ftc,{label:'rule',multiline:true})}</div>
     <div class="pblock-title">After the Campaign</div>
-    <div class="pcard">${elList('ct.post',c.postCampaign,{label:'step',multiline:true})}</div>
+    <div class="pcard">${elCheck('ct.post',c.postCampaign,{label:'step',multiline:true})}</div>
     <div class="pblock-title">Business &amp; Taxes</div>
     <div class="pwarn" style="margin-bottom:10px"><b>&#9888;&#65039; Not financial advice.</b> General guidance only &mdash; consult a tax professional.</div>
     <div class="pcard">${elList('ct.biz',c.bizTax,{label:'note',multiline:true})}</div>`;
@@ -2440,10 +2589,10 @@ function renderBrandFoundations(){
 
 /* ============================================================ NAV */
 const RENDERERS={thisweek:renderThisWeek,growth:renderGrowth,destinations:renderDestinations,
-  board:renderBoard,calendar:renderCalendar,performance:renderPerformance,
+  board:renderHub,calendar:renderCalendar,performance:renderPerformance,
   competitors:renderCompetitors,collabs:renderCollabs,
-  caption:renderCaption,inbox:renderInbox,drone:renderDrone,layovers:renderLayovers,
-  library:renderLibrary,hookvault:renderHookVault,brandfoundations:renderBrandFoundations,
+  caption:renderCaption,drone:renderDrone,layovers:renderLayovers,
+  hookvault:renderHookVault,brandfoundations:renderBrandFoundations,
   chicago:renderChicago,strategy:renderStrategy,
   branddeals:renderBrandDeals,templates:renderTemplates,rates:renderRates,
   contracts:renderContracts,shootkit:renderShootKit,trends:renderTrends};
@@ -2470,11 +2619,12 @@ window.__initPlanner=function(){if(!window.__plannerInit){window.__plannerInit=t
       GIST_DESC='journeysbysam Insights - dashboard sync', lastSnap=null;
   function cfg(){try{return JSON.parse(localStorage.getItem(SYNC_CFG)||'{}');}catch(e){return {};}}
   function setCfg(c){localStorage.setItem(SYNC_CFG,JSON.stringify(c));}
+  function syncable(k){return k&&k.indexOf('jbs_')===0&&k!==SYNC_CFG&&k!=='jbs_ai_cfg';}
   function snapshot(){var o={};for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);
-    if(k&&k.indexOf('jbs_')===0&&k!==SYNC_CFG)o[k]=localStorage.getItem(k);}return o;}
+    if(syncable(k))o[k]=localStorage.getItem(k);}return o;}
   function snapStr(){return JSON.stringify(snapshot());}
   function applyData(d){Object.keys(d||{}).forEach(function(k){
-    if(k.indexOf('jbs_')===0&&k!==SYNC_CFG){try{localStorage.setItem(k,d[k]);}catch(e){}}});}
+    if(syncable(k)){try{localStorage.setItem(k,d[k]);}catch(e){}}});}
   function hdr(c){return {'Authorization':'Bearer '+c.token,'Accept':'application/vnd.github+json'};}
   function badge(s){var b=document.getElementById('topnav-sync');
     if(b)b.className='topnav-refresh sync-'+s;}

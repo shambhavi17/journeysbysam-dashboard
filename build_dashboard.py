@@ -854,11 +854,12 @@ __PLANNER_JS__
       GIST_DESC='journeysbysam Insights - dashboard sync', lastSnap=null;
   function cfg(){try{return JSON.parse(localStorage.getItem(SYNC_CFG)||'{}');}catch(e){return {};}}
   function setCfg(c){localStorage.setItem(SYNC_CFG,JSON.stringify(c));}
+  function syncable(k){return k&&k.indexOf('jbs_')===0&&k!==SYNC_CFG&&k!=='jbs_ai_cfg';}
   function snapshot(){var o={};for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);
-    if(k&&k.indexOf('jbs_')===0&&k!==SYNC_CFG)o[k]=localStorage.getItem(k);}return o;}
+    if(syncable(k))o[k]=localStorage.getItem(k);}return o;}
   function snapStr(){return JSON.stringify(snapshot());}
   function applyData(d){Object.keys(d||{}).forEach(function(k){
-    if(k.indexOf('jbs_')===0&&k!==SYNC_CFG){try{localStorage.setItem(k,d[k]);}catch(e){}}});}
+    if(syncable(k)){try{localStorage.setItem(k,d[k]);}catch(e){}}});}
   function hdr(c){return {'Authorization':'Bearer '+c.token,'Accept':'application/vnd.github+json'};}
   function badge(s){var b=document.getElementById('topnav-sync');
     if(b)b.className='topnav-refresh sync-'+s;}
