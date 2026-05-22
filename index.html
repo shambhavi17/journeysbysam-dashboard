@@ -1488,6 +1488,10 @@ function renderCalendar(){
     <div class="pfilters">
       <select id="cf-pillar"><option value="all">All pillars</option>${pills.map(p=>`<option>${esc(p)}</option>`).join('')}</select>
       <select id="cf-type"><option value="all">All types</option>${types.map(t=>`<option>${esc(t)}</option>`).join('')}</select>
+      <select id="cf-sort">
+        <option value="wk">Week order</option>
+        <option value="asc">Date &#8593; (earliest first)</option>
+        <option value="desc">Date &#8595; (latest first)</option></select>
       <input type="text" id="cf-search" placeholder="&#128269; Search topic or destination...">
     </div>
     <div id="pcal-list"></div>
@@ -1504,25 +1508,42 @@ function renderCalendar(){
       <div class="plib-field"><b>Unique Angle</b>${esc(v.angle)}</div></div>`).join('')}</div>`;
   function renderCalList(){
     const pf=$('#cf-pillar').value,tf=$('#cf-type').value,
+          sort=$('#cf-sort').value,
           q=$('#cf-search').value.trim().toLowerCase(),store=LS.get('jbs_cal_v1',{});
-    let html='',curWk=null,shown=0;
+    // collect matching rows (reading current edited values)
+    let rows=[];
     cal.forEach((it,idx)=>{
-      const cg=f=>efGet('cal.'+idx+'.'+f,it[f]||''),sc=f=>'cal.'+idx+'.'+f;
+      const cg=f=>efGet('cal.'+idx+'.'+f,it[f]||'');
       const type=cg('type'),pillar=cg('pillar'),dest=cg('destination'),topic=cg('topic');
       if(pf!=='all'&&pillar!==pf)return;
       if(tf!=='all'&&type!==tf)return;
       if(q&&!((topic||'').toLowerCase().includes(q)||(dest||'').toLowerCase().includes(q)))return;
-      shown++;
-      if(it.wk!==curWk){curWk=it.wk;html+=`<div class="pwk">Week ${esc(it.wk)}</div>`;}
+      rows.push({it:it,idx:idx,type:type,pillar:pillar,dest:dest,topic:topic,
+                 date:cg('date'),day:cg('day'),time:cg('time')});
+    });
+    if(sort!=='wk'){
+      const ts=d=>{let t=Date.parse((d||'')+', 2026');if(isNaN(t))t=Date.parse(d||'');return isNaN(t)?null:t;};
+      rows.sort((a,b)=>{
+        const ta=ts(a.date),tb=ts(b.date);
+        if(ta==null&&tb==null)return 0;
+        if(ta==null)return 1;
+        if(tb==null)return -1;
+        return sort==='asc'?ta-tb:tb-ta;
+      });
+    }
+    let html='',curWk=null;
+    rows.forEach(r=>{
+      const it=r.it,idx=r.idx,sc=f=>'cal.'+idx+'.'+f;
+      if(sort==='wk'&&it.wk!==curWk){curWk=it.wk;html+=`<div class="pwk">Week ${esc(it.wk)}</div>`;}
       const st=store['c'+idx]||'Idea';
       const lbl=t=>`<label class="pmuted" style="font-size:11px">${t}</label>`;
       html+=`<div class="pcalrow${st==='Posted'?' posted':''}" data-cal="${idx}">
         <div class="pcalrow-head">
-          <span class="pcaldate">${esc(cg('date'))} &middot; ${esc(cg('day'))}</span>
-          <span class="pbadge ${calTypeBadge(type)}">${esc(type)}</span>
-          <span class="pbadge ${pillarBadge(pillar)}">${esc(pillar)}</span>
-          <span class="pcaltopic"><b>${esc(dest)}</b> &mdash; ${esc(topic)}</span>
-          <span class="pscore">${esc(cg('time'))}</span>
+          <span class="pcaldate">${esc(r.date)} &middot; ${esc(r.day)}</span>
+          <span class="pbadge ${calTypeBadge(r.type)}">${esc(r.type)}</span>
+          <span class="pbadge ${pillarBadge(r.pillar)}">${esc(r.pillar)}</span>
+          <span class="pcaltopic"><b>${esc(r.dest)}</b> &mdash; ${esc(r.topic)}</span>
+          <span class="pscore">${esc(r.time)}</span>
         </div>
         <div class="pcalrow-body">
           <div class="pgrid pg4">
@@ -1543,7 +1564,7 @@ function renderCalendar(){
           </div>
         </div></div>`;
     });
-    $('#pcal-list').innerHTML=shown?html:'<div class="pcard pmuted">No posts match these filters.</div>';
+    $('#pcal-list').innerHTML=rows.length?html:'<div class="pcard pmuted">No posts match these filters.</div>';
     $('#pcal-list').querySelectorAll('.pcalrow-head').forEach(h=>h.addEventListener('click',()=>
       h.parentElement.classList.toggle('open')));
     $('#pcal-list').querySelectorAll('[data-calst]').forEach(sel=>sel.addEventListener('change',()=>{
@@ -1551,7 +1572,7 @@ function renderCalendar(){
       sel.closest('.pcalrow').classList.toggle('posted',sel.value==='Posted');}));
     wireEditables($('#pcal-list'));
   }
-  ['cf-pillar','cf-type'].forEach(id=>$('#'+id).addEventListener('change',renderCalList));
+  ['cf-pillar','cf-type','cf-sort'].forEach(id=>$('#'+id).addEventListener('change',renderCalList));
   $('#cf-search').addEventListener('input',renderCalList);
   renderCalList();
   function calCustomCard(p,idx){
