@@ -2019,11 +2019,18 @@ function renderCaption(){
     'Which would you visit first? Tell me below'];
   $('#psec-caption').innerHTML=`
     <div class="pseched">AI Assistant</div>
-    <div class="psecdesc">Two ways to write a caption &mdash; let Claude AI draft one in your voice, or build one fast from the template picker. Both drop into the editor below.</div>
+    <div class="psecdesc">Describe your post and Claude writes a caption in your @journeysbysam voice. The destination, hook and CTA below are optional context. One-time: add your Anthropic API key under &#9881; AI settings.</div>
     <div class="pblock-title">&#129302; AI Caption Writer</div>
-    <div class="psecdesc">Describe your post and Claude writes a caption in your @journeysbysam voice. One-time: add your Anthropic API key under &#9881; AI settings.</div>
     <div class="pcard pai-card">
-      <textarea class="pnote-ed" id="ai-brief" rows="3" placeholder="Describe your post — where you were, what happened, the vibe, a detail to include..."></textarea>
+      <div class="pgrid pg2">
+        <div><label class="pmuted" style="font-size:12px">Destination (context for Claude)</label>
+          <select class="pinput" id="cap-dest">${dests.map(d=>`<option value="${d.id}">${esc(d.name)}</option>`).join('')}</select></div>
+        <div><label class="pmuted" style="font-size:12px">Hook (optional)</label>
+          <select class="pinput" id="cap-hook"></select></div>
+        <div><label class="pmuted" style="font-size:12px">Call to action</label>
+          <select class="pinput" id="cap-cta">${ctas.map(c=>`<option>${esc(c)}</option>`).join('')}</select></div>
+      </div>
+      <textarea class="pnote-ed" id="ai-brief" rows="3" style="margin-top:10px" placeholder="Describe your post — where you were, what happened, the vibe, a detail to include..."></textarea>
       <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
         <button class="pbtn pbtn-accent" id="ai-gen">&#10024; Write with Claude</button>
         <button class="pbtn" id="ai-settings">&#9881;&#65039; AI settings</button>
@@ -2037,20 +2044,6 @@ function renderCaption(){
         <button class="pbtn pbtn-accent" id="ai-save" style="margin-top:10px">Save settings</button>
         <div class="psecdesc" style="margin-top:8px">Get a key at <b>console.anthropic.com &rarr; API Keys</b>. Needs a small prepaid balance (about 1&cent; per caption). If a model name errors, try <b>claude-3-5-haiku-latest</b> (cheapest) or <b>claude-3-5-sonnet-latest</b> (best).</div>
       </div>
-    </div>
-    <div class="pblock-title">&#9889; Quick Template Builder</div>
-    <div class="pcard">
-      <div class="pgrid pg2">
-        <div><label class="pmuted" style="font-size:12px">Destination</label>
-          <select class="pinput" id="cap-dest">${dests.map(d=>`<option value="${d.id}">${esc(d.name)}</option>`).join('')}</select></div>
-        <div><label class="pmuted" style="font-size:12px">Hook</label>
-          <select class="pinput" id="cap-hook"></select></div>
-        <div><label class="pmuted" style="font-size:12px">Hashtag set</label>
-          <select class="pinput" id="cap-tags">${(PLANNER.hashtags||[]).map((h,i)=>`<option value="${i}">${esc(h.category)}</option>`).join('')}</select></div>
-        <div><label class="pmuted" style="font-size:12px">Call to action</label>
-          <select class="pinput" id="cap-cta">${ctas.map(c=>`<option>${esc(c)}</option>`).join('')}</select></div>
-      </div>
-      <button class="pbtn pbtn-accent" id="cap-gen" style="margin-top:13px">&#10024; Generate caption</button>
     </div>
     <div class="pblock-title">Your Caption</div>
     <textarea class="pcapout" id="cap-out" placeholder="Your generated caption appears here — fully editable before you copy it."></textarea>
@@ -2120,18 +2113,6 @@ function renderCaption(){
       $('#cap-out').scrollIntoView({block:'center',behavior:'smooth'});
     }).catch(e=>{$('#ai-status').textContent='⚠ '+e.message;})
     .then(()=>{btn.disabled=false;btn.innerHTML=ot;});
-  });
-  $('#cap-gen').addEventListener('click',()=>{
-    const d=dests.find(x=>x.id===$('#cap-dest').value)||dests[0];
-    const hook=$('#cap-hook').value;
-    const ts=PLANNER.hashtags[+$('#cap-tags').value];
-    const cta=$('#cap-cta').value;
-    const kw=(d.keywords||[]).slice(0,4).join('  ·  ');
-    $('#cap-out').value=hook+'\n\n'+
-      '[Write 2-3 lines: what makes '+d.name+' worth it, one specific detail, the feeling.]\n\n'+
-      (kw?('📍 '+d.name+'  ·  '+kw+'\n\n'):'')+
-      '👉 '+cta+'\n\n'+
-      (ts?ts.tags:'#JourneysBySam');
   });
   $('#cap-copy').addEventListener('click',()=>{
     const ta=$('#cap-out');if(!ta.value)return;ta.select();
