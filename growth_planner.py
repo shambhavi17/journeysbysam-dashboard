@@ -2707,6 +2707,8 @@ function wireEditables(root){
 function recGet(key){return (LS.get(K_REC,{})[key])||[];}
 function recAdd(key,obj){const s=LS.get(K_REC,{});s[key]=(s[key]||[]);s[key].push(obj);LS.set(K_REC,s);}
 function recDel(key,i){const s=LS.get(K_REC,{});if(s[key]){s[key].splice(i,1);LS.set(K_REC,s);}}
+function recUpd(key,id,field,val){const s=LS.get(K_REC,{}),a=s[key]||[];
+  for(let i=0;i<a.length;i++){if(a[i]._id===id){a[i][field]=val;LS.set(K_REC,s);return;}}}
 
 /* ---------- build flat idea list from destinations ---------- */
 const IDEAS=[];
@@ -2736,6 +2738,13 @@ function renderGrowth(){
       <td><input class="pinput" style="max-width:130px" data-gmt="${esc(m.month)}" type="number" value="${tgt}"></td>
       <td><input class="pinput" style="max-width:130px" data-gm="${esc(m.month)}" type="number"
         placeholder="actual" value="${got}"></td></tr>`;}).join('');
+  const cmonths=recGet('growthMonth');
+  monthRows+=cmonths.map((m,i)=>`<tr>
+    <td><input class="pinput" style="max-width:150px" data-gcm-id="${esc(m._id)}" data-gcm-f="month" value="${esc(m.month||'')}" placeholder="Month"></td>
+    <td><input class="pinput" style="max-width:130px" type="number" data-gcm-id="${esc(m._id)}" data-gcm-f="target" placeholder="target" value="${m.target!=null?m.target:''}"></td>
+    <td style="display:flex;gap:6px;align-items:center">
+      <input class="pinput" style="max-width:130px" type="number" data-gcm-id="${esc(m._id)}" data-gcm-f="actual" placeholder="actual" value="${m.actual!=null?m.actual:''}">
+      <button class="pxbtn" data-gcmdel="${i}" title="Delete month">&times;</button></td></tr>`).join('');
   let metricCards=g.metrics.map(mt=>{
     const v=st.metrics&&st.metrics[mt.key]!=null?st.metrics[mt.key]:'';
     return `<div class="pcard"><div class="pbadge pb-lav">${esc(mt.label)}</div>
@@ -2762,7 +2771,8 @@ function renderGrowth(){
     </div>
     <div class="pblock-title">Monthly Milestones</div>
     <div class="pcard"><table class="pmonth"><thead><tr><th>Month</th><th>Target</th><th>Actual</th></tr></thead>
-      <tbody>${monthRows}</tbody></table></div>
+      <tbody>${monthRows}</tbody></table>
+      <button class="paddbtn" id="pg-addmonth" style="margin-top:10px">+ Add a month</button></div>
     <div class="pblock-title">Suggested Posting Frequency</div>
     <div class="pcard">${elList('growth.cadence',Object.values(g.cadence).concat(['Daily content goal: '+g.dailyGoal]),{label:'cadence note'})}</div>
     <div class="pblock-title">Reach &amp; Engagement Tracker <span class="psaved" id="pg-saved"></span></div>
@@ -2777,6 +2787,14 @@ function renderGrowth(){
   $('#psec-growth').querySelectorAll('[data-gmt]').forEach(inp=>inp.addEventListener('change',e=>{
     const s=LS.get(K_GROWTH,{});s.targets=s.targets||{};
     s.targets[e.target.dataset.gmt]=e.target.value?parseInt(e.target.value,10):null;LS.set(K_GROWTH,s);}));
+  $('#pg-addmonth').addEventListener('click',()=>{
+    recAdd('growthMonth',{_id:'gm'+Date.now(),month:'New month',target:'',actual:''});renderGrowth();});
+  $('#psec-growth').querySelectorAll('[data-gcm-id]').forEach(inp=>inp.addEventListener('change',e=>{
+    const f=e.target.dataset.gcmF;let v=e.target.value;
+    if(f!=='month')v=v?parseInt(v,10):'';
+    recUpd('growthMonth',e.target.dataset.gcmId,f,v);}));
+  $('#psec-growth').querySelectorAll('[data-gcmdel]').forEach(b=>b.addEventListener('click',()=>{
+    recDel('growthMonth',+b.dataset.gcmdel);renderGrowth();}));
   wireEditables($('#psec-growth'));
   $('#psec-growth').querySelectorAll('[data-gmet]').forEach(inp=>inp.addEventListener('change',e=>{
     const s=LS.get(K_GROWTH,{});s.metrics=s.metrics||{};
