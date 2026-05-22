@@ -443,6 +443,10 @@ body.theme-planner{background:#f7f1e9;}
   border:1px dashed var(--p-accent);background:transparent;color:var(--p-accent-d);
   border-radius:9px;padding:6px 13px;transition:.13s;}
 #pane-planner .paddbtn:hover{background:var(--p-blush);}
+#pane-planner .pelrst{margin-top:8px;margin-left:8px;font-family:var(--p-sans);font-size:12px;
+  font-weight:500;cursor:pointer;border:1px solid var(--p-line);background:transparent;
+  color:var(--p-muted);border-radius:9px;padding:6px 12px;transition:.13s;}
+#pane-planner .pelrst:hover{color:var(--p-accent-d);border-color:var(--p-accent);}
 #pane-planner .pnote-ed{
   width:100%;margin-top:6px;font-family:var(--p-sans);font-size:13px;color:var(--p-ink);
   background:var(--p-bg);border:1px solid var(--p-line);border-radius:11px;
@@ -934,13 +938,20 @@ const K_GROWTH='jbs_growth_v1',K_IDEAS='jbs_ideas_v1',K_DRONE='jbs_drone_v1',
    recGet  — custom records added by the user, per collection key
    Every list & field on every tab routes through these.                       */
 const K_EDIT='jbs_edits_v1',K_REC='jbs_recs_v1';
+const EL_ORIG={};   /* scope -> original default list, for Restore */
 function _ed(){return LS.get(K_EDIT,{});}
 function elGet(scope,defaults){const s=_ed();return s[scope]!=null?s[scope].slice():(defaults||[]).slice();}
 function elSet(scope,arr){const s=_ed();s[scope]=arr;LS.set(K_EDIT,s);}
+function elDel(scope){const s=_ed();delete s[scope];delete s[scope+'::chk'];LS.set(K_EDIT,s);}
 function efGet(scope,def){const s=_ed();return s[scope]!=null?s[scope]:(def==null?'':def);}
 function efSet(scope,v){const s=_ed();s[scope]=v;LS.set(K_EDIT,s);}
+function elRstBtn(scope){
+  return _ed()[scope]!=null
+    ?`<button class="pelrst" data-elrst title="Reset this list to its original items">&#8635; Restore original</button>`:'';
+}
 function elList(scope,items,opts){
   opts=opts||{};const ml=opts.multiline?1:0;
+  if(!(scope in EL_ORIG))EL_ORIG[scope]=(items||[]).slice();
   const data=elGet(scope,items);
   const rows=data.map((v,i)=>`<div class="phookrow-ed">`+
     (ml?`<textarea class="pel-in" data-el="${esc(scope)}" data-i="${i}" rows="2">${esc(v)}</textarea>`
@@ -948,7 +959,7 @@ function elList(scope,items,opts){
     `<button class="pxbtn" data-eldel title="Delete">&times;</button></div>`).join('');
   return `<div class="pellist" data-elscope="${esc(scope)}" data-elml="${ml}" data-ellabel="${esc(opts.label||'item')}">`+
     (rows||'<div class="pmuted" style="font-size:12px">Empty &mdash; add one below.</div>')+
-    `<button class="paddbtn" data-eladd>+ Add ${esc(opts.label||'item')}</button></div>`;
+    `<button class="paddbtn" data-eladd>+ Add ${esc(opts.label||'item')}</button>${elRstBtn(scope)}</div>`;
 }
 function elField(scope,val,opts){
   opts=opts||{};const v=efGet(scope,val);
@@ -982,11 +993,19 @@ function wirePellist(box){
   if(add)add.addEventListener('click',()=>{
     const arr=pellistVals(box);arr.push('');const fresh=rebuild(arr);
     const ins=fresh.querySelectorAll('.pel-in');if(ins.length)ins[ins.length-1].focus();});
+  const rst=box.querySelector('[data-elrst]');
+  if(rst)rst.addEventListener('click',()=>{
+    if(!confirm('Restore this list to its original items? Any changes you made to this list will be replaced.'))return;
+    elDel(scope);
+    const t=document.createElement('div');
+    t.innerHTML=elList(scope,(EL_ORIG[scope]||[]).slice(),{multiline:box.dataset.elml==='1',label:box.dataset.ellabel});
+    const fresh=t.firstElementChild;box.replaceWith(fresh);wirePellist(fresh);});
 }
 /* elCheck — editable checklist: each row has a clickable checkbox + editable text.
    Text saved to scope (like elList); checked state to scope+'::chk' (parallel bool array). */
 function elCheck(scope,items,opts){
   opts=opts||{};const ml=opts.multiline?1:0;
+  if(!(scope in EL_ORIG))EL_ORIG[scope]=(items||[]).slice();
   const data=elGet(scope,items);
   const chk=elGet(scope+'::chk',[]);
   const rows=data.map((v,i)=>`<div class="pcheckedit${ml?' ml':''}">`+
@@ -996,7 +1015,7 @@ function elCheck(scope,items,opts){
     `<button class="pxbtn" data-eldel title="Delete">&times;</button></div>`).join('');
   return `<div class="pchecklist" data-elscope="${esc(scope)}" data-elml="${ml}" data-ellabel="${esc(opts.label||'item')}">`+
     (rows||'<div class="pmuted" style="font-size:12px">Empty &mdash; add one below.</div>')+
-    `<button class="paddbtn" data-eladd>+ Add ${esc(opts.label||'item')}</button></div>`;
+    `<button class="paddbtn" data-eladd>+ Add ${esc(opts.label||'item')}</button>${elRstBtn(scope)}</div>`;
 }
 function pchkVals(box){return [].map.call(box.querySelectorAll('.pel-in'),x=>x.value);}
 function pchkStates(box){return [].map.call(box.querySelectorAll('.pcheck-box'),x=>x.classList.contains('on'));}
@@ -1023,6 +1042,13 @@ function wirePchecklist(box){
     const arr=pchkVals(box),chk=pchkStates(box);arr.push('');chk.push(false);
     const fresh=rebuild(arr,chk);const ins=fresh.querySelectorAll('.pel-in');
     if(ins.length)ins[ins.length-1].focus();});
+  const rst=box.querySelector('[data-elrst]');
+  if(rst)rst.addEventListener('click',()=>{
+    if(!confirm('Restore this list to its original items? Any changes you made to this list will be replaced.'))return;
+    elDel(scope);
+    const t=document.createElement('div');
+    t.innerHTML=elCheck(scope,(EL_ORIG[scope]||[]).slice(),{multiline:box.dataset.elml==='1',label:box.dataset.ellabel});
+    const fresh=t.firstElementChild;box.replaceWith(fresh);wirePchecklist(fresh);});
 }
 function wireEditables(root){
   if(!root)return;
