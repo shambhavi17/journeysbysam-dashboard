@@ -2137,9 +2137,52 @@ HOOKS_100 = [
     "Come with me to my [activity]",
 ]
 
+# =============================================================================
+# YOUTUBE  — single-tab channel command center
+# =============================================================================
+YOUTUBE = {
+    "metrics": [
+        {"label": "Subscribers", "value": "", "hint": "Total channel subscribers"},
+        {"label": "Total Views", "value": "", "hint": "All-time views"},
+        {"label": "Watch Time (hrs)", "value": "", "hint": "Last 28 days"},
+        {"label": "Videos Published", "value": "", "hint": "Total uploads"},
+        {"label": "Avg View Duration", "value": "", "hint": "Last 28 days"},
+        {"label": "Subscriber Goal", "value": "100000", "hint": "Your next milestone"},
+    ],
+    "videos": [],
+    "ideas": [
+        {"title": "Rome in 4 Days - Full Travel Vlog", "format": "Long-form vlog",
+         "hook": "Everyone does Rome wrong - here's the 4-day route locals actually take",
+         "status": "Idea"},
+        {"title": "How I Plan a Trip So It's Actually Affordable", "format": "Long-form",
+         "hook": "I booked 3 weeks in Europe for less than one week usually costs",
+         "status": "Idea"},
+        {"title": "Chicago Hidden Gems Only Locals Know", "format": "Long-form",
+         "hook": "You've seen the Bean - here's the Chicago tourists never find",
+         "status": "Idea"},
+        {"title": "Packing 3 Climates in One Carry-On", "format": "Short",
+         "hook": "One carry-on. Three countries. Zero checked bags.",
+         "status": "Idea"},
+        {"title": "What $100 Gets You in a Day in Rome", "format": "Long-form",
+         "hook": "I gave myself $100 for a full day in Rome - here's what happened",
+         "status": "Idea"},
+    ],
+    "tips": [
+        "Titles and thumbnails decide ~90% of views - write the title before you film, design the thumbnail before you edit.",
+        "Front-load the hook in the first 15 seconds - show the payoff, then deliver it.",
+        "Repurpose everything: each long-form travel video = 3-5 Shorts and a carousel for Instagram.",
+        "Consistency beats perfection - one solid video a week trains the algorithm.",
+        "Use Shorts to reach new viewers and long-form to convert them into subscribers.",
+        "Add chapters and an end screen pointing to your next-best video to lift watch time.",
+        "Reply to every comment in the first hour - early engagement boosts reach.",
+        "Pin a comment with a question to spark discussion and signal an active channel.",
+    ],
+}
+
 # build the full data object the front-end consumes
 PLANNER_DATA = {
     "growth": GROWTH,
+    "youtube": YOUTUBE,
     "destinations": DESTINATIONS,
     "visitedDest": VISITED_DEST,
     "drone": DRONE,
@@ -2544,6 +2587,7 @@ PLANNER_BODY = r"""
   <div class="psubnav" id="psubnav">
     <button class="psubtab active" data-sec="thisweek">&#128198; This Week</button>
     <button class="psubtab" data-sec="growth">&#128200; Growth Tracker</button>
+    <button class="psubtab" data-sec="youtube">&#128250; YouTube</button>
     <button class="psubtab" data-sec="destinations">&#128506;&#65039; Destinations</button>
     <button class="psubtab" data-sec="board">&#127916; Content Hub</button>
     <button class="psubtab" data-sec="calendar">&#128197; Content Calendar</button>
@@ -2567,6 +2611,7 @@ PLANNER_BODY = r"""
 
   <div class="psec active" id="psec-thisweek"></div>
   <div class="psec" id="psec-growth"></div>
+  <div class="psec" id="psec-youtube"></div>
   <div class="psec" id="psec-destinations"></div>
   <div class="psec" id="psec-board"></div>
   <div class="psec" id="psec-calendar"></div>
@@ -2800,6 +2845,74 @@ function renderGrowth(){
     const s=LS.get(K_GROWTH,{});s.metrics=s.metrics||{};
     s.metrics[e.target.dataset.gmet]=e.target.value?parseFloat(e.target.value):null;LS.set(K_GROWTH,s);
     const sv=$('#pg-saved');if(sv){sv.textContent='✓ saved';setTimeout(()=>sv.textContent='',1500);}}));
+}
+
+/* ============================================================ YOUTUBE */
+function renderYoutube(){
+  const y=PLANNER.youtube;
+  const lbl=t=>`<label class="pmuted" style="font-size:11px">${t}</label>`;
+  const metrics=y.metrics.map((m,i)=>`<div class="pcard">
+    <div class="pbadge pb-blush">${esc(m.label)}</div>
+    <div style="margin-top:8px">${elField('yt.metric'+i,m.value,{ph:m.label})}</div>
+    <div class="pmuted" style="font-size:11px;margin-top:6px">${esc(m.hint||'')}</div></div>`).join('');
+  const vids=y.videos.map((v,i)=>({v:v,scope:'yt.v'+i,custom:false}))
+    .concat(recGet('ytVideo').map((v,i)=>({v:v,scope:'yt.'+v._id,custom:true,ci:i})));
+  const videoCards=vids.map(o=>{const v=o.v,sc=k=>o.scope+'.'+k;
+    return `<div class="pcard${o.custom?' preccard':''}">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+        <div style="flex:1">${elField(sc('title'),v.title,{ph:'Video title'})}</div>
+        ${o.custom?`<button class="precdel" data-ytvdel="${o.ci}">Delete</button>`:''}
+      </div>
+      <div class="pgrid pg4">
+        <div>${lbl('Published')}${elField(sc('date'),v.date,{ph:'May 2026'})}</div>
+        <div>${lbl('Views')}${elField(sc('views'),v.views,{ph:'0'})}</div>
+        <div>${lbl('Subscribers gained')}${elField(sc('subs'),v.subs,{ph:'0'})}</div>
+        <div>${lbl('Watch time (hrs)')}${elField(sc('watch'),v.watch,{ph:'0'})}</div>
+      </div>
+      <div style="margin-top:8px">${lbl('Status')}${elField(sc('status'),v.status,{ph:'Idea / Filming / Editing / Published'})}</div>
+      <div style="margin-top:8px">${lbl('Notes — what worked, what to improve')}${elField(sc('notes'),v.notes,{multiline:true})}</div>
+    </div>`;}).join('');
+  const ideas=y.ideas.map((it,i)=>({it:it,scope:'yt.i'+i,custom:false}))
+    .concat(recGet('ytIdea').map((it,i)=>({it:it,scope:'yt.'+it._id,custom:true,ci:i})));
+  const ideaCards=ideas.map(o=>{const it=o.it,sc=k=>o.scope+'.'+k;
+    return `<div class="pcard${o.custom?' preccard':''}">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+        <div style="flex:1">${elField(sc('title'),it.title,{ph:'Video idea'})}</div>
+        ${o.custom?`<button class="precdel" data-ytidel="${o.ci}">Delete</button>`:''}
+      </div>
+      <div class="pgrid pg2">
+        <div>${lbl('Format')}${elField(sc('format'),it.format,{ph:'Long-form / Short / Vlog'})}</div>
+        <div>${lbl('Status')}${elField(sc('status'),it.status,{ph:'Idea / Scripting / Filming / Published'})}</div>
+      </div>
+      <div style="margin-top:8px">${lbl('Hook')}${elField(sc('hook'),it.hook,{multiline:true,ph:'Opening hook'})}</div>
+    </div>`;}).join('');
+  $('#psec-youtube').innerHTML=`
+    <div class="pseched">YouTube</div>
+    <div class="psecdesc">Your YouTube command center &mdash; channel metrics, a subscriber tracker per video, and your video ideas pipeline. Every field is editable and saves to your browser.</div>
+    <div class="pblock-title">Channel Metrics</div>
+    <div class="psecdesc">Update these from YouTube Studio whenever you check in.</div>
+    <div class="pgrid pg3">${metrics}</div>
+    <div class="pblock-title">Subscriber Tracker &mdash; Per Video</div>
+    <div class="psecdesc">Log each video&rsquo;s performance so you can see which ones actually grow the channel.</div>
+    <button class="paddrec" id="yt-addvideo" style="margin-bottom:14px">+ Add a video</button>
+    <div class="pgrid pg2" id="yt-videos">${videoCards||'<div class="pcard pmuted">No videos logged yet &mdash; add your first.</div>'}</div>
+    <div class="pblock-title">Video Ideas &amp; Plan</div>
+    <div class="psecdesc">Your YouTube content pipeline &mdash; ideas, formats, hooks and where each one stands.</div>
+    <button class="paddrec" id="yt-addidea" style="margin-bottom:14px">+ Add a video idea</button>
+    <div class="pgrid pg2" id="yt-ideas">${ideaCards}</div>
+    <div class="pblock-title">YouTube Growth Tips</div>
+    <div class="pcard">${elList('yt.tips',y.tips,{label:'tip',multiline:true})}</div>`;
+  $('#yt-addvideo').addEventListener('click',()=>{
+    recAdd('ytVideo',{_id:'ytv'+Date.now(),title:'New video',date:'',views:'',subs:'',watch:'',status:'Idea',notes:''});
+    renderYoutube();});
+  $('#yt-addidea').addEventListener('click',()=>{
+    recAdd('ytIdea',{_id:'yti'+Date.now(),title:'New video idea',format:'Long-form',hook:'',status:'Idea'});
+    renderYoutube();});
+  $('#psec-youtube').querySelectorAll('[data-ytvdel]').forEach(b=>b.addEventListener('click',()=>{
+    recDel('ytVideo',+b.dataset.ytvdel);renderYoutube();}));
+  $('#psec-youtube').querySelectorAll('[data-ytidel]').forEach(b=>b.addEventListener('click',()=>{
+    recDel('ytIdea',+b.dataset.ytidel);renderYoutube();}));
+  wireEditables($('#psec-youtube'));
 }
 
 /* ============================================================ DESTINATIONS */
@@ -4283,7 +4396,7 @@ function renderBrandFoundations(){
 }
 
 /* ============================================================ NAV */
-const RENDERERS={thisweek:renderThisWeek,growth:renderGrowth,destinations:renderDestinations,
+const RENDERERS={thisweek:renderThisWeek,growth:renderGrowth,youtube:renderYoutube,destinations:renderDestinations,
   board:renderHub,calendar:renderCalendar,performance:renderPerformance,
   competitors:renderCompetitors,collabs:renderCollabs,
   caption:renderCaption,drone:renderDrone,layovers:renderLayovers,
