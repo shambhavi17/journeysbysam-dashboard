@@ -1894,6 +1894,31 @@ TCP = {
             "Lightroom export: JPEG, sRGB, ~76–80% quality (IG compresses anyway), 72ppi",
             "YouTube video: 1280x720 minimum HD",
         ],
+        "gear": [
+            "Camera (photo): Canon R5 — or any full-frame mirrorless",
+            "Camera (video): Canon R5 C",
+            "Crop-sensor option: Canon R7",
+            "Vlog camera: Sony ZV-1",
+            "Action camera: GoPro Hero 12 Black",
+            "360 camera: Insta360 X3",
+            "Drone (social, compact): DJI Mini 4 Pro",
+            "Drone (YouTube): DJI Air 3",
+            "Drone (all-around pro): DJI Mavic 3 Pro",
+            "Tripod: Peak Design Travel Tripod",
+            "Gimbal: DJI RS3",
+            "Mics: Rode Wireless GO II",
+            "ND filters: PolarPro — for smooth daytime video",
+            "Travel storage: SanDisk Extreme Pro SSD (+ a backup drive at home)",
+        ],
+        "scriptFlow": [
+            "Purpose of the video — what is it for?",
+            "Goal of the video — what should the viewer do/feel?",
+            "Target audience — who exactly is this for?",
+            "Hook — the first 1–2 seconds",
+            "Location(s)",
+            "Text / voiceover script",
+            "Shot list — every clip you need to capture",
+        ],
         "aiPrompts": [
             {"name": "Itinerary script", "body": "Write me a video script for a trip through [DESTINATION]. You are a professional travel agent who knows [DESTINATION] very well. Our audience is [AGE]-year-old [AUDIENCE] looking to [GOAL]. The goal of this video is to create an itinerary for [TIMEFRAME]. There will be [N] characters. I want a [LENGTH]-second script and a shot list."},
             {"name": "Storytelling script", "body": "Write me a storytelling video script for [TOPIC]. You are a professional cinematographer who knows [SUBJECT] very well. Our audience is [AGE]-year-old [AUDIENCE]. The goal is to tell a story about [SUBJECT] in [TIMEFRAME]. I want a [LENGTH]-second script and a shot list."},
@@ -2481,8 +2506,16 @@ function elList(scope,items,opts){
 function elField(scope,val,opts){
   opts=opts||{};const v=efGet(scope,val);
   return opts.multiline
-    ?`<textarea class="pnote-ed" data-elf="${esc(scope)}" placeholder="${esc(opts.ph||'')}">${esc(v)}</textarea>`
+    ?`<textarea class="pnote-ed" rows="${opts.rows||2}" data-elf="${esc(scope)}" placeholder="${esc(opts.ph||'')}">${esc(v)}</textarea>`
     :`<input class="pinput" data-elf="${esc(scope)}" placeholder="${esc(opts.ph||'')}" value="${esc(v)}">`;
+}
+function wireCopyF(root){
+  root.querySelectorAll('[data-copyf]').forEach(b=>b.addEventListener('click',()=>{
+    const el=root.querySelector('[data-elf="'+b.dataset.copyf+'"]');
+    if(!el)return;
+    try{navigator.clipboard.writeText(el.value);}catch(e){try{el.select();document.execCommand('copy');}catch(e2){}}
+    const t=b.textContent;b.textContent='✓ Copied';setTimeout(()=>b.textContent=t,1300);
+  }));
 }
 function pellistVals(box){return [].map.call(box.querySelectorAll('.pel-in'),x=>x.value);}
 function wirePellist(box){
@@ -3701,170 +3734,212 @@ function wireCopy(root){
   });
 }
 function renderBrandDeals(){
-  const p=PLANNER.tcp.pitch,checks=LS.get(K_CHECK,{});
-  const readiness=p.readiness.map((c,i)=>{const on=checks['tcpr'+i];
-    return `<div class="pcheck${on?' on':''}" data-chk="tcpr${i}"><div class="pbox">${on?'✓':''}</div><span>${esc(c)}</span></div>`;}).join('');
-  const find=p.findBrands.map(f=>`<div class="pcard"><div class="pbadge pb-lav">${esc(f.k)}</div>
-    <div class="pmuted" style="margin-top:7px">${esc(f.v)}</div></div>`).join('');
-  const anatomy=p.anatomy.map(a=>`<div class="pcard"><div class="pbadge pb-blush">${esc(a.part)}</div>
-    <ul class="pfield" style="margin-top:6px">${a.points.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
-  const collab=p.hotelCollabTypes.map(c=>`<div class="plib-field"><b>${esc(c.k)}</b>${esc(c.v)}</div>`).join('');
-  const pkgs=p.collabPackages.map(c=>`<div class="pcard"><div class="pbadge pb-gold">${esc(c.k)}</div>
-    <div class="pmuted" style="margin-top:7px">${esc(c.v)}</div></div>`).join('');
+  const p=PLANNER.tcp.pitch;
+  const kv=a=>a.map(x=>x.k+' — '+x.v);
+  const anatomy=p.anatomy.map((a,i)=>`<div class="pcard"><div class="pbadge pb-blush">${esc(a.part)}</div>
+    <div style="margin-top:6px">${elList('bd.anat'+i,a.points,{label:'point',multiline:true})}</div></div>`).join('');
   $('#psec-branddeals').innerHTML=`
     <div class="pseched">Brand Deals</div>
-    <div class="psecdesc">The pitching playbook &mdash; from "am I ready" to landing the collab.</div>
+    <div class="psecdesc">The pitching playbook &mdash; every list here is editable; edit, add or delete anything.</div>
     <div class="pblock-title">Before You Pitch &mdash; Readiness Check</div>
-    <div class="pcard">${readiness}</div>
+    <div class="pcard">${elList('bd.readiness',p.readiness,{label:'criterion',multiline:true})}</div>
     <div class="pblock-title">How to Find Brands</div>
-    <div class="pgrid pg3">${find}</div>
+    <div class="pcard">${elList('bd.find',kv(p.findBrands),{label:'method',multiline:true})}</div>
     <div class="pblock-title">Anatomy of a Pitch Email</div>
     <div class="pgrid pg2">${anatomy}</div>
     <div class="pblock-title">Email Etiquette</div>
-    <div class="pcard"><ul class="pfield">${p.etiquette.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+    <div class="pcard">${elList('bd.etiquette',p.etiquette,{label:'tip',multiline:true})}</div>
     <div class="pblock-title">Follow-Up Cadence</div>
-    <div class="pcard">${p.followUp.schedule.map((s,i)=>`<div class="pstep"><span class="pnum">${i+1}</span><span>${esc(s)}</span></div>`).join('')}
-      <div class="phook" style="margin-top:10px">${esc(p.followUp.note)}</div></div>
+    <div class="pcard">${elList('bd.followup',p.followUp.schedule,{label:'step'})}
+      <div class="pfield" style="margin-top:10px"><h4>Note</h4>${elField('bd.followupnote',p.followUp.note,{multiline:true})}</div></div>
     <div class="pblock-title">Ways to Work With Hotels</div>
-    <div class="pcard">${collab}</div>
+    <div class="pcard">${elList('bd.collab',kv(p.hotelCollabTypes),{label:'type',multiline:true})}</div>
     <div class="pblock-title">Hotel Pitching Mistakes to Avoid</div>
-    <div class="pcard"><ul class="pfield">${p.hotelMistakes.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+    <div class="pcard">${elList('bd.mistakes',p.hotelMistakes,{label:'mistake',multiline:true})}</div>
     <div class="pblock-title">Sample Collaboration Packages</div>
-    <div class="pgrid pg3">${pkgs}</div>`;
-  $('#psec-branddeals').querySelectorAll('[data-chk]').forEach(el=>el.addEventListener('click',()=>{
-    const c=LS.get(K_CHECK,{});c[el.dataset.chk]=!c[el.dataset.chk];LS.set(K_CHECK,c);renderBrandDeals();}));
+    <div class="pcard">${elList('bd.packages',kv(p.collabPackages),{label:'package',multiline:true})}</div>`;
+  wireEditables($('#psec-branddeals'));
 }
 function renderTemplates(){
-  const T=PLANNER.tcp.templates;
-  const cards=T.map(t=>`<div class="pcard">
+  const recs=PLANNER.tcp.templates.map((t,i)=>({t:t,scope:'tpl.p'+i,custom:false}))
+    .concat(recGet('tplCustom').map((t,i)=>({t:t,scope:'tpl.'+t._id,custom:true,ci:i})));
+  const cards=recs.map(o=>{const t=o.t,sc=k=>o.scope+'.'+k;
+    return `<div class="pcard${o.custom?' preccard':''}">
     <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
-      <h3 style="font-family:var(--p-serif);font-size:20px;font-weight:600">${esc(t.name)}</h3>
-      <span class="pbadge pb-lav" style="margin-left:auto">${esc(t.cat)}</span></div>
-    ${copyBlock(t.body)}</div>`).join('');
+      <div style="flex:1">${elField(sc('name'),t.name,{ph:'Template name'})}</div>
+      <span class="pbadge pb-lav">${esc(t.cat||'Custom')}</span>
+      ${o.custom?`<button class="precdel" data-tpldel="${o.ci}">Delete</button>`:''}
+    </div>
+    ${elField(sc('body'),t.body,{multiline:true,rows:14})}
+    <div style="margin-top:8px"><button class="pbtn pbtn-accent" data-copyf="${sc('body')}">&#128203; Copy</button></div>
+  </div>`;}).join('');
   $('#psec-templates').innerHTML=`
     <div class="pseched">Pitch Templates</div>
-    <div class="psecdesc">${T.length} ready-to-use pitch templates, pre-filled for @journeysbysam. Copy, swap the [BRACKETS], send.</div>
+    <div class="psecdesc">${recs.length} editable pitch templates. Edit any field, copy, or add your own.</div>
+    <button class="paddrec" id="tpl-add" style="margin-bottom:14px">+ Add a template</button>
     <div class="pgrid pg2">${cards}</div>`;
-  wireCopy($('#psec-templates'));
+  $('#tpl-add').addEventListener('click',()=>{
+    recAdd('tplCustom',{_id:'tp'+Date.now(),name:'New template',cat:'Custom',body:''});renderTemplates();});
+  $('#psec-templates').querySelectorAll('[data-tpldel]').forEach(b=>b.addEventListener('click',()=>{
+    recDel('tplCustom',+b.dataset.tpldel);renderTemplates();}));
+  wireEditables($('#psec-templates'));wireCopyF($('#psec-templates'));
 }
 function renderRates(){
   const r=PLANNER.tcp.rates;
-  const tiers=r.tiers.map(t=>`<tr><td><b>${esc(t.tier)}</b></td><td>${esc(t.rate)}</td></tr>`).join('');
-  const usage=r.usage.map(u=>`<tr><td><b>${esc(u.k)}</b></td><td>${esc(u.v)}</td></tr>`).join('');
-  const principles=r.principles.map((x,i)=>`<div class="pcard">
-    <div class="pbadge pb-blush">Principle ${i+1}</div>
-    <div class="pmuted" style="margin-top:6px">${esc(x)}</div></div>`).join('');
-  const scripts=r.scripts.map(s=>`<div class="pdest"><div class="pdest-head">
-    <span class="pdest-emoji">&#128172;</span><div><h3>${esc(s.name)}</h3>
-    <div class="pdest-sub">Negotiation script</div></div><span class="pdest-chevron">&#9660;</span></div>
-    <div class="pdest-body">${copyBlock(s.body)}</div></div>`).join('');
+  const recs=r.scripts.map((s,i)=>({s:s,scope:'rs.p'+i,custom:false}))
+    .concat(recGet('scrCustom').map((s,i)=>({s:s,scope:'rs.'+s._id,custom:true,ci:i})));
+  const scripts=recs.map(o=>{const s=o.s,sc=k=>o.scope+'.'+k;
+    return `<div class="pcard${o.custom?' preccard':''}">
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+      <div style="flex:1">${elField(sc('name'),s.name,{ph:'Script name'})}</div>
+      ${o.custom?`<button class="precdel" data-scrdel="${o.ci}">Delete</button>`:''}
+    </div>
+    ${elField(sc('body'),s.body,{multiline:true,rows:10})}
+    <div style="margin-top:8px"><button class="pbtn pbtn-accent" data-copyf="${sc('body')}">&#128203; Copy</button></div>
+  </div>`;}).join('');
   $('#psec-rates').innerHTML=`
     <div class="pseched">Rates &amp; Negotiation</div>
-    <div class="psecdesc">How to price your work and hold your ground when a brand responds.</div>
-    <div class="pgoal-hero" style="padding:22px">
-      <div style="font-family:var(--p-serif);font-size:21px;font-weight:600;color:var(--p-ink)">${esc(r.formula)}</div></div>
+    <div class="psecdesc">How to price your work and hold your ground &mdash; every list is editable.</div>
+    <div class="pcard" style="background:linear-gradient(135deg,var(--p-blush),var(--p-lav))">
+      <h4 style="font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--p-accent-d);margin-bottom:6px">Pricing Formula</h4>
+      ${elField('rates.formula',r.formula,{multiline:true})}</div>
     <div class="pgrid pg2" style="margin-top:18px">
       <div><div class="pblock-title" style="margin-top:6px">Influencer Fee Tiers</div>
-        <div class="pcard"><table class="pmonth"><thead><tr><th>Tier</th><th>Minimum rate</th></tr></thead><tbody>${tiers}</tbody></table></div></div>
+        <div class="pcard">${elList('rates.tiers',r.tiers.map(t=>t.tier+' — '+t.rate),{label:'tier'})}</div></div>
       <div><div class="pblock-title" style="margin-top:6px">Pricing Rules of Thumb</div>
-        <div class="pcard"><ul class="pfield">${r.rules.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></div>
+        <div class="pcard">${elList('rates.rules',r.rules,{label:'rule',multiline:true})}</div></div>
     </div>
     <div class="pblock-title">Reasons to Charge More</div>
-    <div class="pcard"><div class="pchips">${r.chargeMore.map(c=>`<span class="pchip">${esc(c)}</span>`).join('')}</div></div>
+    <div class="pcard">${elList('rates.chargeMore',r.chargeMore,{label:'reason'})}</div>
     <div class="pblock-title">Licensing &amp; Usage Cheat Sheet</div>
     <div class="psecdesc">Add on top of your base rate. ~3 months of organic social usage is normally included free.</div>
-    <div class="pcard"><table class="pmonth"><thead><tr><th>Usage type</th><th>Add to base rate</th></tr></thead><tbody>${usage}</tbody></table></div>
-    <div class="pblock-title">8 Negotiation Principles</div>
-    <div class="pgrid pg2">${principles}</div>
+    <div class="pcard">${elList('rates.usage',r.usage.map(u=>u.k+' — '+u.v),{label:'usage type',multiline:true})}</div>
+    <div class="pblock-title">Negotiation Principles</div>
+    <div class="pcard">${elList('rates.principles',r.principles,{label:'principle',multiline:true})}</div>
     <div class="pblock-title">Negotiation Scripts</div>
-    <div class="psecdesc">Tap to expand, then copy. Swap the [BRACKETS] for your numbers.</div>
-    <div class="pgrid" style="gap:12px">${scripts}</div>`;
-  $('#psec-rates').querySelectorAll('.pdest-head').forEach(h=>h.addEventListener('click',()=>
-    h.parentElement.classList.toggle('open')));
-  wireCopy($('#psec-rates'));
+    <div class="psecdesc">Editable &mdash; copy, tweak, or add your own. Swap the [BRACKETS] for your numbers.</div>
+    <button class="paddrec" id="scr-add" style="margin-bottom:14px">+ Add a script</button>
+    <div class="pgrid pg2">${scripts}</div>`;
+  $('#scr-add').addEventListener('click',()=>{
+    recAdd('scrCustom',{_id:'sc'+Date.now(),name:'New script',body:''});renderRates();});
+  $('#psec-rates').querySelectorAll('[data-scrdel]').forEach(b=>b.addEventListener('click',()=>{
+    recDel('scrCustom',+b.dataset.scrdel);renderRates();}));
+  wireEditables($('#psec-rates'));wireCopyF($('#psec-rates'));
 }
 function renderContracts(){
   const c=PLANNER.tcp.contracts;
-  const checklist=c.checklist.map(cat=>`<div class="pcard">
+  const checklist=c.checklist.map((cat,i)=>`<div class="pcard">
     <div class="pbadge pb-lav">${esc(cat.cat)}</div>
-    <ul class="pfield" style="margin-top:7px">${cat.items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
+    <div style="margin-top:7px">${elList('ct.cl'+i,cat.items,{label:'item',multiline:true})}</div></div>`).join('');
   $('#psec-contracts').innerHTML=`
     <div class="pseched">Contracts &amp; Money</div>
-    <div class="psecdesc">Read every contract before you sign &mdash; catch the red flags, keep your copyright, get paid on time.</div>
+    <div class="psecdesc">Read every contract before you sign. Every checklist below is editable &mdash; add your own items.</div>
     <div class="pblock-title">Contract Review Checklist</div>
     <div class="pgrid pg2">${checklist}</div>
     <div class="pgrid pg2" style="margin-top:18px">
-      <div class="pcard"><div class="pbadge pb-blush">&#128681; Red Flags</div>
-        <ul class="pfield" style="margin-top:7px">${c.redFlags.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
-      <div class="pcard"><div class="pbadge pb-sage">&#9989; Green Flags</div>
-        <ul class="pfield" style="margin-top:7px">${c.greenFlags.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+      <div><div class="pblock-title" style="margin-top:6px">&#128681; Red Flags</div>
+        <div class="pcard">${elList('ct.red',c.redFlags,{label:'red flag',multiline:true})}</div></div>
+      <div><div class="pblock-title" style="margin-top:6px">&#9989; Green Flags</div>
+        <div class="pcard">${elList('ct.green',c.greenFlags,{label:'green flag',multiline:true})}</div></div>
     </div>
     <div class="pblock-title">FTC Disclosure</div>
-    <div class="pcard"><ul class="pfield">${c.ftc.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+    <div class="pcard">${elList('ct.ftc',c.ftc,{label:'rule',multiline:true})}</div>
     <div class="pblock-title">After the Campaign</div>
-    <div class="pcard">${c.postCampaign.map((s,i)=>`<div class="pstep"><span class="pnum">${i+1}</span><span>${esc(s)}</span></div>`).join('')}</div>
+    <div class="pcard">${elList('ct.post',c.postCampaign,{label:'step',multiline:true})}</div>
     <div class="pblock-title">Business &amp; Taxes</div>
     <div class="pwarn" style="margin-bottom:10px"><b>&#9888;&#65039; Not financial advice.</b> General guidance only &mdash; consult a tax professional.</div>
-    <div class="pcard"><ul class="pfield">${c.bizTax.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+    <div class="pcard">${elList('ct.biz',c.bizTax,{label:'note',multiline:true})}</div>`;
+  wireEditables($('#psec-contracts'));
 }
 function renderShootKit(){
   const s=PLANNER.tcp.shoot;
-  const settings=s.settings.map(x=>`<tr><td><b>${esc(x.k)}</b></td><td>${esc(x.v)}</td></tr>`).join('');
-  const lenses=s.lenses.map(l=>`<div class="plib-field"><b>${esc(l.k)}</b>${esc(l.v)}</div>`).join('');
-  const prompts=s.aiPrompts.map(pr=>`<div class="pcard"><div class="pbadge pb-lav">${esc(pr.name)}</div>
-    <div style="margin-top:8px">${copyBlock(pr.body)}</div></div>`).join('');
+  const recs=s.aiPrompts.map((p,i)=>({p:p,scope:'sk.p'+i,custom:false}))
+    .concat(recGet('promptCustom').map((p,i)=>({p:p,scope:'sk.'+p._id,custom:true,ci:i})));
+  const prompts=recs.map(o=>{const p=o.p,sc=k=>o.scope+'.'+k;
+    return `<div class="pcard${o.custom?' preccard':''}">
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+      <div style="flex:1">${elField(sc('name'),p.name,{ph:'Prompt name'})}</div>
+      ${o.custom?`<button class="precdel" data-prdel="${o.ci}">Delete</button>`:''}
+    </div>
+    ${elField(sc('body'),p.body,{multiline:true,rows:6})}
+    <div style="margin-top:8px"><button class="pbtn pbtn-accent" data-copyf="${sc('body')}">&#128203; Copy</button></div>
+  </div>`;}).join('');
   $('#psec-shootkit').innerHTML=`
     <div class="pseched">Shoot Kit</div>
-    <div class="psecdesc">Camera settings, lenses and export specs &mdash; plus AI script prompts.</div>
+    <div class="psecdesc">Camera settings, lenses, gear, exports and AI script prompts &mdash; all editable.</div>
     <div class="pblock-title">Camera Settings Cheat Sheet</div>
-    <div class="pcard"><table class="pmonth"><thead><tr><th>Scenario</th><th>Aperture &middot; Shutter &middot; ISO</th></tr></thead><tbody>${settings}</tbody></table></div>
+    <div class="pcard">${elList('sk.settings',s.settings.map(x=>x.k+' — '+x.v),{label:'scenario'})}</div>
     <div class="pblock-title">Which Lens?</div>
-    <div class="pcard">${lenses}</div>
+    <div class="pcard">${elList('sk.lenses',s.lenses.map(l=>l.k+' — '+l.v),{label:'lens',multiline:true})}</div>
+    <div class="pblock-title">Gear Checklist</div>
+    <div class="pcard">${elList('sk.gear',s.gear,{label:'item'})}</div>
+    <div class="pblock-title">Video Scripting Workflow</div>
+    <div class="pcard">${elList('sk.scriptflow',s.scriptFlow,{label:'step'})}</div>
     <div class="pblock-title">Export Specs</div>
-    <div class="pcard"><ul class="pfield">${s.exports.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+    <div class="pcard">${elList('sk.exports',s.exports,{label:'spec'})}</div>
     <div class="pblock-title">AI Script Prompts</div>
-    <div class="psecdesc">Paste into ChatGPT and fill the [BRACKETS].</div>
+    <div class="psecdesc">Paste into ChatGPT and fill the [BRACKETS]. Editable &mdash; add your own.</div>
+    <button class="paddrec" id="pr-add" style="margin-bottom:14px">+ Add a prompt</button>
     <div class="pgrid pg2">${prompts}</div>`;
-  wireCopy($('#psec-shootkit'));
+  $('#pr-add').addEventListener('click',()=>{
+    recAdd('promptCustom',{_id:'pr'+Date.now(),name:'New prompt',body:''});renderShootKit();});
+  $('#psec-shootkit').querySelectorAll('[data-prdel]').forEach(b=>b.addEventListener('click',()=>{
+    recDel('promptCustom',+b.dataset.prdel);renderShootKit();}));
+  wireEditables($('#psec-shootkit'));wireCopyF($('#psec-shootkit'));
 }
 
 /* ============================================================ HOOK VAULT */
-const K_HOOKFAV='jbs_hookfav_v1';
+const K_HOOKS='jbs_hooks_v1';
+function hookData(){
+  const d=LS.get(K_HOOKS,null);
+  if(d&&d.length!=null)return d;
+  const fresh=(PLANNER.hooks100||[]).map(t=>({t:t,fav:false}));
+  LS.set(K_HOOKS,fresh);return fresh;
+}
 function renderHookVault(){
-  const hooks=PLANNER.hooks100||[];
+  const data=hookData();
   $('#psec-hookvault').innerHTML=`
     <div class="pseched">Hook Vault</div>
-    <div class="psecdesc">${hooks.length} viral hook templates. Search, &#11088; your favourites, and copy &mdash; then swap the [BRACKETS] for your specifics.</div>
+    <div class="psecdesc">${data.length} viral hook templates &mdash; fully editable. Search, &#11088; favourites, copy, edit, add or delete.</div>
     <div class="pfilters">
       <input type="text" id="hv-search" placeholder="&#128269; Search hooks...">
       <button class="pbtn" id="hv-fav">&#11088; Favourites</button>
+      <button class="pbtn pbtn-accent" id="hv-add">+ Add hook</button>
       <span class="pmuted" id="hv-count" style="font-size:12.5px;margin-left:auto"></span>
     </div>
     <div class="pcard" id="hv-list"></div>`;
   function draw(){
-    const f=LS.get(K_HOOKFAV,{});
+    const d=hookData();
     const q=$('#hv-search').value.trim().toLowerCase();
     const fo=$('#hv-fav').classList.contains('active');
     let html='',n=0;
-    hooks.forEach((h,i)=>{
-      if(q&&h.toLowerCase().indexOf(q)<0)return;
-      if(fo&&!f[i])return;
+    d.forEach((h,i)=>{
+      if(q&&(h.t||'').toLowerCase().indexOf(q)<0)return;
+      if(fo&&!h.fav)return;
       n++;
-      html+=`<div class="phookrow"><span class="pn">${i+1}</span>
-        <span style="flex:1">${esc(h)}</span>
-        <span class="pstar${f[i]?' on':''}" data-hvfav="${i}" title="Favourite">&#11088;</span>
-        <button class="ptog" data-hvcopy="${i}">Copy</button></div>`;
+      html+=`<div class="phookrow-ed">
+        <span class="pstar${h.fav?' on':''}" data-hvfav="${i}" title="Favourite">&#11088;</span>
+        <input data-hvtext="${i}" value="${esc(h.t)}">
+        <button class="pxbtn" data-hvcopy="${i}" title="Copy">&#128203;</button>
+        <button class="pxbtn" data-hvdel="${i}" title="Delete">&times;</button></div>`;
     });
     $('#hv-list').innerHTML=html||'<div class="pmuted" style="font-size:12.5px;padding:8px">No hooks match.</div>';
-    $('#hv-count').textContent=n+' / '+hooks.length+' hooks';
+    $('#hv-count').textContent=n+' / '+d.length+' hooks';
+    $('#hv-list').querySelectorAll('[data-hvtext]').forEach(inp=>inp.addEventListener('change',()=>{
+      const x=hookData();x[+inp.dataset.hvtext].t=inp.value;LS.set(K_HOOKS,x);}));
     $('#hv-list').querySelectorAll('[data-hvfav]').forEach(el=>el.addEventListener('click',()=>{
-      const s=LS.get(K_HOOKFAV,{}),i=el.dataset.hvfav;s[i]=!s[i];LS.set(K_HOOKFAV,s);draw();}));
+      const x=hookData(),i=+el.dataset.hvfav;x[i].fav=!x[i].fav;LS.set(K_HOOKS,x);draw();}));
     $('#hv-list').querySelectorAll('[data-hvcopy]').forEach(b=>b.addEventListener('click',()=>{
-      try{navigator.clipboard.writeText(hooks[+b.dataset.hvcopy]);}catch(e){}
-      b.textContent='✓ Copied';setTimeout(()=>b.textContent='Copy',1300);}));
+      try{navigator.clipboard.writeText(hookData()[+b.dataset.hvcopy].t);}catch(e){}
+      b.textContent='✓';setTimeout(()=>b.innerHTML='&#128203;',1100);}));
+    $('#hv-list').querySelectorAll('[data-hvdel]').forEach(b=>b.addEventListener('click',()=>{
+      const x=hookData();x.splice(+b.dataset.hvdel,1);LS.set(K_HOOKS,x);draw();}));
   }
   $('#hv-search').addEventListener('input',draw);
   $('#hv-fav').addEventListener('click',e=>{e.target.classList.toggle('active');draw();});
+  $('#hv-add').addEventListener('click',()=>{
+    const x=hookData();x.unshift({t:'',fav:false});LS.set(K_HOOKS,x);draw();
+    const f=$('#hv-list').querySelector('[data-hvtext]');if(f)f.focus();});
   draw();
 }
 
